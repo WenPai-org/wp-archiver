@@ -10,7 +10,9 @@
 #wp-admin-bar-archiver.archiver-failure .ab-item {
 	color: #dc3232!important
 }
-
+#wp-admin-bar-archiver .ab-icon.dashicons.dashicons-backup {
+    top: 2px;
+}
 #wp-admin-bar-archiver-trigger .ab-icon {
 	display: inline-block;
 	float: right!important;
@@ -44,9 +46,29 @@
 	}
 }
 
-.wrap.archiver-settings {
-	max-width: 1200px
+.nav-tab {
+    border: 0px solid #c3c4c7;
+    background: #ffffff;
 }
+.nav-tab.nav-tab-active {
+    border-bottom: 2px solid #007cba;
+    font-weight: 600;
+    background: #f0f0f1;
+}
+.nav-tab:hover:not(.active) {
+    background: #f0f0f1;
+    border-bottom-color: #dcdcde;
+}
+
+.card {
+	background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    max-width: unset;
+    margin-top: 20px;
+    padding: 20px;
+}
+
 
 .postbox {
 	border: 0 solid #c3c4c7;

@@ -3,7 +3,7 @@
  * Plugin Name:       WP Archiver
  * Plugin URI:        http://wenpai.org/plugins/wp-archiver
  * Description:       Archive your content using the Wayback Machine.
- * Version:           1.3.0
+ * Version:           1.3.1
  * Author:            WenPai.org
  * Author URI:        https://wenpai.org/
  * License:           GPL-2.0+
@@ -17,7 +17,7 @@ if (!defined('WPINC')) {
     die;
 }
 
-define('ARCHIVER_VERSION', '1.3.0');
+define('ARCHIVER_VERSION', '1.3.1');
 define('ARCHIVER_PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('ARCHIVER_PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 define('ARCHIVER_PLUGIN_BASENAME', plugin_basename(__FILE__));

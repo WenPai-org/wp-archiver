@@ -38,10 +38,48 @@ class Archiver_Admin {
     $selected_post_types = get_option('archiver_post_types', array('post', 'page'));
     ?>
     <div class="wrap">
-        <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+        <h1><?php echo esc_html(get_admin_page_title()); ?>
+                <span style="font-size: 13px; padding-left: 10px;"><?php printf(esc_html__('Version: %s', 'archiver'), esc_html(ARCHIVER_VERSION)); ?></span>
+            <a href="https://sharecms.com/document/wp-archiver" target="_blank" class="button button-secondary" style="margin-left: 10px;"><?php esc_html_e('Document', 'archiver'); ?></a>
+            <a href="https://sharecms.com/forums/" target="_blank" class="button button-secondary"><?php esc_html_e('Support', 'archiver'); ?></a>
+        </h1>
+        
+<div class="card">
+                        <h3><?php _e('Archive Statistics', 'archiver'); ?></h3>
+                        <p><?php _e('View statistics and records of Archive.', 'archiver'); ?></p>
+
+                        <div class="archiver-stats-container">
+                            <div class="archiver-stat-card">
+                                <h3><?php _e('Pending URLs', 'archiver'); ?></h3>
+                                <div class="stat-value"><?php echo number_format(count(get_option('archiver_urls_to_update', array()))); ?></div>
+                            </div>
+                            <div class="archiver-stat-card">
+                                <h3><?php _e('Total Archived', 'archiver'); ?></h3>
+                                <div class="stat-value"><?php echo number_format((int) get_option('archiver_total_archived', 0)); ?></div>
+                            </div>
+                            <div class="archiver-stat-card">
+                                <h3><?php _e('Failed Snapshots', 'archiver'); ?></h3>
+                                <div class="stat-value"><?php echo number_format((int) get_option('archiver_failed_snapshots', 0)); ?></div>
+                            </div>
+                            <div class="archiver-stat-card">
+                                <h3><?php _e('Last Run', 'archiver'); ?></h3>
+                                <div class="stat-value"><?php echo esc_html(get_option('archiver_last_run', __('Never', 'archiver'))); ?></div>
+                            </div>
+                            <div class="archiver-stat-card">
+                                <h3><?php _e('Next Run', 'archiver'); ?></h3>
+                                <div class="stat-value"><?php 
+                                    $next_run = wp_next_scheduled('archiver_process_urls');
+                                    echo $next_run ? esc_html(date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $next_run)) : __('Not scheduled', 'archiver');
+                                ?></div>
+                            </div>
+                        </div>
+                        </div>
+
+<div class="card">
         <h2 class="nav-tab-wrapper">
             <a href="#general" class="nav-tab nav-tab-active" data-tab="general"><?php _e('General Settings', 'archiver'); ?></a>
-            <a href="#tools" class="nav-tab" data-tab="tools"><?php _e('Tools', 'archiver'); ?></a>
+            <a href="#tools" class="nav-tab" data-tab="tools"><?php _e('Snapshot Tools', 'archiver'); ?></a>
+            <a href="#about" class="nav-tab" data-tab="about"><?php _e('About', 'archiver'); ?></a>
         </h2>
         <?php settings_errors('archiver_messages'); ?>
         
@@ -71,6 +109,8 @@ class Archiver_Admin {
                                 </tr>
                             </table>
                             <h3><?php _e('Update Frequency', 'archiver'); ?></h3>
+                            <p><?php _e('Adjust the update frequency to avoid excessive requests.', 'archiver'); ?></p>
+
                             <table class="form-table">
                                 <tr>
                                     <th scope="row"><?php _e('Frequency', 'archiver'); ?></th>
@@ -102,32 +142,6 @@ class Archiver_Admin {
             <div id="tools" class="archiver-tab-content" style="display: none;">
                 <div class="postbox">
                     <div class="inside">
-                        <h3><?php _e('Archive Statistics', 'archiver'); ?></h3>
-                        <div class="archiver-stats-container">
-                            <div class="archiver-stat-card">
-                                <h3><?php _e('Pending URLs', 'archiver'); ?></h3>
-                                <div class="stat-value"><?php echo number_format(count(get_option('archiver_urls_to_update', array()))); ?></div>
-                            </div>
-                            <div class="archiver-stat-card">
-                                <h3><?php _e('Total Archived', 'archiver'); ?></h3>
-                                <div class="stat-value"><?php echo number_format((int) get_option('archiver_total_archived', 0)); ?></div>
-                            </div>
-                            <div class="archiver-stat-card">
-                                <h3><?php _e('Failed Snapshots', 'archiver'); ?></h3>
-                                <div class="stat-value"><?php echo number_format((int) get_option('archiver_failed_snapshots', 0)); ?></div>
-                            </div>
-                            <div class="archiver-stat-card">
-                                <h3><?php _e('Last Run', 'archiver'); ?></h3>
-                                <div class="stat-value"><?php echo esc_html(get_option('archiver_last_run', __('Never', 'archiver'))); ?></div>
-                            </div>
-                            <div class="archiver-stat-card">
-                                <h3><?php _e('Next Run', 'archiver'); ?></h3>
-                                <div class="stat-value"><?php 
-                                    $next_run = wp_next_scheduled('archiver_process_urls');
-                                    echo $next_run ? esc_html(date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $next_run)) : __('Not scheduled', 'archiver');
-                                ?></div>
-                            </div>
-                        </div>
                         <h3><?php _e('Pending Updates', 'archiver'); ?></h3>
                         <?php $this->display_pending_updates(); ?>
                         <form method="post" action="">
@@ -168,7 +182,41 @@ class Archiver_Admin {
                     </div>
                 </div>
             </div>
+
+            <div id="about" class="archiver-tab-content" style="display: none;">
+    <div class="postbox">
+        <div class="inside">
+            <h3><?php _e('About Internet Archive', 'archiver'); ?></h3>
+            
+            <p><?php _e('The Internet Archive is a non-profit digital library that preserves web pages, books, audio recordings, videos, and software for future generations. One of its most well-known services is the Wayback Machine, which allows users to view archived versions of web pages across time.', 'archiver'); ?></p>
+            
+            <h4><?php _e('Why Archive Your Website?', 'archiver'); ?></h4>
+            <ul style="list-style: decimal; padding: inherit;">
+                <li><?php _e('Preserve your content against accidental deletion or server failures', 'archiver'); ?></li>
+                <li><?php _e('Maintain a public record of your published work', 'archiver'); ?></li>
+                <li><?php _e('Protect against link rot (when external links stop working)', 'archiver'); ?></li>
+                <li><?php _e('Establish historical context and content provenance', 'archiver'); ?></li>
+            </ul>
+            
+            <h3><?php _e('About WP Archiver', 'archiver'); ?></h3>
+            <p><?php _e('This plugin automatically archives your WordPress content to the Internet Archive whenever you publish or update posts, pages, or other content types. It helps ensure your valuable content is preserved for the long term.', 'archiver'); ?></p>
+            
+            <h3><?php _e('Best Practices', 'archiver'); ?></h3>
+            <ul style="list-style: decimal; padding: inherit;">
+                <li><?php _e('Archive important content immediately after publication', 'archiver'); ?></li>
+                <li><?php _e('For large sites, use weekly archiving to avoid overwhelming the service', 'archiver'); ?></li>
+                <li><?php _e('Regularly check your archived content to ensure it was captured correctly', 'archiver'); ?></li>
+                <li><?php _e('Consider manually archiving key pages after major updates', 'archiver'); ?></li>
+            </ul>
+            
+            <p><?php _e('Thank you for helping preserve the web by archiving your content!', 'archiver'); ?></p>
         </div>
+    </div>
+</div>
+
+        </div>
+        </div>
+
     </div>
     <?php
 }
@@ -298,7 +346,7 @@ private function clear_cache() {
             return;
         }
         echo '<p>' . sprintf(__('Total pending URLs: %d', 'archiver'), count($urls_to_update)) . '</p>';
-        echo '<div style="max-height: 300px; overflow-y: scroll; border: 1px solid #ddd; padding: 10px; background: #f9f9f9;">';
+        echo '<div style="max-height: 300px; overflow-y: scroll; border: 1px solid #ddd; border-radius: 6px; padding: 10px; background: #f9f9f9;">';
         echo '<ul>';
         foreach (array_slice($urls_to_update, 0, 50) as $url) {
             echo '<li style="word-break: break-all;">' . esc_html($url) . '</li>';

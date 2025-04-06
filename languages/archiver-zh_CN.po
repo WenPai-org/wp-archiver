@@ -1,0 +1,414 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Archiver\n"
+"POT-Creation-Date: 2025-04-06 09:41+0800\n"
+"PO-Revision-Date: 2025-04-06 09:41+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: archiver.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: includes/class-archiver-admin.php:25
+msgid "Archiver Settings"
+msgstr ""
+
+#: includes/class-archiver-admin.php:26 includes/class-archiver.php:25
+#: includes/class-archiver.php:223
+msgid "Archiver"
+msgstr ""
+
+#: includes/class-archiver-admin.php:35
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: includes/class-archiver-admin.php:42
+#, php-format
+msgid "Version: %s"
+msgstr ""
+
+#: includes/class-archiver-admin.php:43
+msgid "Document"
+msgstr ""
+
+#: includes/class-archiver-admin.php:44
+msgid "Support"
+msgstr ""
+
+#: includes/class-archiver-admin.php:48
+msgid "Archive Statistics"
+msgstr ""
+
+#: includes/class-archiver-admin.php:49
+msgid "View statistics and records of Archive."
+msgstr ""
+
+#: includes/class-archiver-admin.php:53
+msgid "Pending URLs"
+msgstr ""
+
+#: includes/class-archiver-admin.php:57
+msgid "Total Archived"
+msgstr ""
+
+#: includes/class-archiver-admin.php:61
+msgid "Failed Snapshots"
+msgstr ""
+
+#: includes/class-archiver-admin.php:65
+msgid "Last Run"
+msgstr ""
+
+#: includes/class-archiver-admin.php:66
+msgid "Never"
+msgstr ""
+
+#: includes/class-archiver-admin.php:69
+msgid "Next Run"
+msgstr ""
+
+#: includes/class-archiver-admin.php:72
+msgid "Not scheduled"
+msgstr ""
+
+#: includes/class-archiver-admin.php:80
+msgid "General Settings"
+msgstr ""
+
+#: includes/class-archiver-admin.php:81
+msgid "Snapshot Tools"
+msgstr ""
+
+#: includes/class-archiver-admin.php:82
+msgid "About"
+msgstr ""
+
+#: includes/class-archiver-admin.php:92
+msgid "Content Types to Archive"
+msgstr ""
+
+#: includes/class-archiver-admin.php:93
+msgid ""
+"Select which content types should be automatically archived when published "
+"or updated."
+msgstr ""
+
+#: includes/class-archiver-admin.php:96
+msgid "Post Types"
+msgstr ""
+
+#: includes/class-archiver-admin.php:111
+msgid "Update Frequency"
+msgstr ""
+
+#: includes/class-archiver-admin.php:112
+msgid "Adjust the update frequency to avoid excessive requests."
+msgstr ""
+
+#: includes/class-archiver-admin.php:116
+msgid "Frequency"
+msgstr ""
+
+#: includes/class-archiver-admin.php:120
+msgid "Hourly"
+msgstr ""
+
+#: includes/class-archiver-admin.php:123
+msgid "Twice Daily"
+msgstr ""
+
+#: includes/class-archiver-admin.php:126
+msgid "Daily"
+msgstr ""
+
+#: includes/class-archiver-admin.php:129
+msgid "Weekly"
+msgstr ""
+
+#: includes/class-archiver-admin.php:132
+msgid "How often should the plugin check for new archives?"
+msgstr ""
+
+#: includes/class-archiver-admin.php:136
+msgid "Save Settings"
+msgstr ""
+
+#: includes/class-archiver-admin.php:145
+msgid "Pending Updates"
+msgstr ""
+
+#: includes/class-archiver-admin.php:152
+msgid "Run Manual Update Now"
+msgstr ""
+
+#: includes/class-archiver-admin.php:153
+msgid "Process all pending URLs immediately."
+msgstr ""
+
+#: includes/class-archiver-admin.php:156
+msgid "Bulk Actions"
+msgstr ""
+
+#: includes/class-archiver-admin.php:161
+msgid "Select bulk action..."
+msgstr ""
+
+#: includes/class-archiver-admin.php:162
+msgid "Archive all published posts"
+msgstr ""
+
+#: includes/class-archiver-admin.php:163
+msgid "Clear pending queue"
+msgstr ""
+
+#: includes/class-archiver-admin.php:169
+msgid "Apply"
+msgstr ""
+
+#: includes/class-archiver-admin.php:172
+msgid "Debug Tools"
+msgstr ""
+
+#: includes/class-archiver-admin.php:178
+msgid "Clear Cache"
+msgstr ""
+
+#: includes/class-archiver-admin.php:179
+msgid "Clear all cached snapshot data."
+msgstr ""
+
+#: includes/class-archiver-admin.php:189
+msgid "About Internet Archive"
+msgstr ""
+
+#: includes/class-archiver-admin.php:191
+msgid ""
+"The Internet Archive is a non-profit digital library that preserves web "
+"pages, books, audio recordings, videos, and software for future generations. "
+"One of its most well-known services is the Wayback Machine, which allows "
+"users to view archived versions of web pages across time."
+msgstr ""
+
+#: includes/class-archiver-admin.php:193
+msgid "Why Archive Your Website?"
+msgstr ""
+
+#: includes/class-archiver-admin.php:195
+msgid "Preserve your content against accidental deletion or server failures"
+msgstr ""
+
+#: includes/class-archiver-admin.php:196
+msgid "Maintain a public record of your published work"
+msgstr ""
+
+#: includes/class-archiver-admin.php:197
+msgid "Protect against link rot (when external links stop working)"
+msgstr ""
+
+#: includes/class-archiver-admin.php:198
+msgid "Establish historical context and content provenance"
+msgstr ""
+
+#: includes/class-archiver-admin.php:201
+msgid "About WP Archiver"
+msgstr ""
+
+#: includes/class-archiver-admin.php:202
+msgid ""
+"This plugin automatically archives your WordPress content to the Internet "
+"Archive whenever you publish or update posts, pages, or other content types. "
+"It helps ensure your valuable content is preserved for the long term."
+msgstr ""
+
+#: includes/class-archiver-admin.php:204
+msgid "Best Practices"
+msgstr ""
+
+#: includes/class-archiver-admin.php:206
+msgid "Archive important content immediately after publication"
+msgstr ""
+
+#: includes/class-archiver-admin.php:207
+msgid "For large sites, use weekly archiving to avoid overwhelming the service"
+msgstr ""
+
+#: includes/class-archiver-admin.php:208
+msgid ""
+"Regularly check your archived content to ensure it was captured correctly"
+msgstr ""
+
+#: includes/class-archiver-admin.php:209
+msgid "Consider manually archiving key pages after major updates"
+msgstr ""
+
+#: includes/class-archiver-admin.php:212
+msgid "Thank you for helping preserve the web by archiving your content!"
+msgstr ""
+
+#: includes/class-archiver-admin.php:233
+msgid "Manual update triggered. The update will run in the background."
+msgstr ""
+
+#: includes/class-archiver-admin.php:250
+msgid "Please select at least one post type to archive."
+msgstr ""
+
+#: includes/class-archiver-admin.php:261
+msgid "Invalid post types selected."
+msgstr ""
+
+#: includes/class-archiver-admin.php:276
+msgid "Settings saved successfully."
+msgstr ""
+
+#: includes/class-archiver-admin.php:292
+msgid "Pending queue has been cleared."
+msgstr ""
+
+#: includes/class-archiver-admin.php:300
+msgid "Please select a valid bulk action."
+msgstr ""
+
+#: includes/class-archiver-admin.php:322
+#, php-format
+msgid "%d posts have been added to the archive queue."
+msgstr ""
+
+#: includes/class-archiver-admin.php:337
+msgid "All cached data has been cleared."
+msgstr ""
+
+#: includes/class-archiver-admin.php:345
+msgid "No pending updates."
+msgstr ""
+
+#: includes/class-archiver-admin.php:348
+#, php-format
+msgid "Total pending URLs: %d"
+msgstr ""
+
+#: includes/class-archiver-admin.php:355
+msgid "more"
+msgstr ""
+
+#: includes/class-archiver.php:89 includes/class-archiver.php:105
+#: includes/class-archiver.php:124
+msgid "Archives"
+msgstr ""
+
+#: includes/class-archiver.php:142
+msgid ""
+"No archives yet. A snapshot request has been scheduled and will be processed "
+"soon."
+msgstr ""
+
+#: includes/class-archiver.php:144
+msgid "There are no archives of this URL."
+msgstr ""
+
+#: includes/class-archiver.php:164
+msgid "See all snapshots ↗"
+msgstr ""
+
+#: includes/class-archiver.php:167
+msgid "Archive Now"
+msgstr ""
+
+#: includes/class-archiver.php:175
+msgid "Security check failed. Please try again."
+msgstr ""
+
+#: includes/class-archiver.php:180
+msgid "You do not have permission to perform this action."
+msgstr ""
+
+#: includes/class-archiver.php:186
+msgid "Invalid URL provided."
+msgstr ""
+
+#: includes/class-archiver.php:203
+msgid "Snapshot created successfully!"
+msgstr ""
+
+#: includes/class-archiver.php:208
+msgid "Failed to retrieve snapshots."
+msgstr ""
+
+#: includes/class-archiver.php:235
+msgid "Snapshots"
+msgstr ""
+
+#: includes/class-archiver.php:242
+msgid "Trigger Snapshot"
+msgstr ""
+
+#: includes/class-archiver.php:445
+msgid "Triggering snapshot..."
+msgstr ""
+
+#: includes/class-archiver.php:446
+msgid "Snapshot triggered successfully!"
+msgstr ""
+
+#: includes/class-archiver.php:447 includes/class-archiver.php:661
+msgid "Failed to trigger snapshot."
+msgstr ""
+
+#: includes/class-archiver.php:475
+msgid ""
+"Archiver is currently disabled via the <code>archiver_can_run</code> filter."
+msgstr ""
+
+#: includes/class-archiver.php:491
+msgid "You do not have permissions to trigger snapshots."
+msgstr ""
+
+#: includes/class-archiver.php:495
+msgid "Invalid URL parameter."
+msgstr ""
+
+#: includes/class-archiver.php:500
+msgid "Snapshot request recorded and will be processed soon."
+msgstr ""
+
+#: includes/class-archiver.php:643
+msgid "URL cannot be empty."
+msgstr ""
+
+#: includes/class-archiver.php:647
+msgid "Snapshot already taken recently."
+msgstr ""
+
+#: js/archiver.js:36
+msgid "Unknown error occurred"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "WP Archiver"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://wenpai.org/plugins/wp-archiver"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Archive your content using the Wayback Machine."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "WenPai.org"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://wenpai.org/"
+msgstr ""

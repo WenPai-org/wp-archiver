@@ -10,7 +10,7 @@ class Archiver {
     protected $snapshot_max_count;
     protected $wayback_machine_url_save = 'https://web.wenpai.net/save/';
     protected $wayback_machine_url_fetch_archives = 'https://web.wenpai.net/cdx/';
-    protected $wayback_machine_url_view = 'https://web.archive.org/web/';
+    protected $wayback_machine_url_view = 'https://web.wenpai.net/web/';
     protected $current_permalink = '';
     protected static $instance = null;
 
@@ -149,7 +149,7 @@ class Archiver {
             $time_format = get_option('time_format');
             echo '<ul>';
             foreach ($snapshots as $snapshot) {
-                $date_time = date('Y-m-d H:i:s', strtotime($snapshot['timestamp']));
+                $date_time = date('Y.m.d H:i', strtotime($snapshot['timestamp']));
                 $adjusted_date = get_date_from_gmt($date_time);
                 $snapshot_url = $this->wayback_machine_url_view . $snapshot['timestamp'] . '/' . $snapshot['original'];
                 $date_time = date_i18n($date_format . ' @ ' . $time_format, strtotime($adjusted_date));
@@ -220,9 +220,9 @@ class Archiver {
         }
         $wp_admin_bar->add_node([
             'id' => 'archiver',
-            'title' => '<span class="ab-icon dashicons dashicons-archive"></span><span class="ab-label">' . __('Archiver', 'archiver') . '</span>',
-            'href' => $this->wayback_machine_url_view . '*/' . $url,
-            'meta' => ['target' => '_blank']
+            'title' => '<span class="ab-icon dashicons dashicons-backup"></span><span class="ab-label">' . __('Archiver', 'archiver') . '</span>',
+            'href' => admin_url('tools.php?page=archiver-settings'), 
+            'meta' => ['target' => '_self'] 
         ]);
         $snapshots = $this->get_post_snapshots();
         $snapshot_count = is_wp_error($snapshots) ? 0 : count($snapshots);
@@ -663,12 +663,31 @@ public function process_urls_for_update() {
     }
 
     public function reschedule_cron_task($frequency) {
-        $timestamp = wp_next_scheduled('archiver_process_urls');
-        if ($timestamp) {
-            wp_unschedule_event($timestamp, 'archiver_process_urls');
-        }
-        wp_schedule_event(time(), $frequency, 'archiver_process_urls');
+    $timestamp = wp_next_scheduled('archiver_process_urls');
+    if ($timestamp) {
+        wp_unschedule_event($timestamp, 'archiver_process_urls');
+        error_log("Archiver: Cleared previous cron task scheduled at " . date('Y.m.d H:i', $timestamp));
     }
+
+    $last_run = get_option('archiver_last_run'); // e.g., "2025-04-05 10:33:46"
+    $start_time = time(); // Default to now
+
+    if ($last_run && $frequency === 'hourly') {
+        $last_run_timestamp = strtotime($last_run); // Convert to UTC timestamp
+        $next_hour = strtotime('+1 hour', $last_run_timestamp); // Next hourly slot
+        if ($next_hour > time()) {
+            $start_time = $next_hour; // Schedule from next hour after last run
+        }
+    }
+
+    $result = wp_schedule_event($start_time, $frequency, 'archiver_process_urls');
+    if ($result === false) {
+        error_log("Archiver: Failed to schedule cron task with frequency $frequency");
+    } else {
+        $next_run = wp_next_scheduled('archiver_process_urls');
+        error_log("Archiver: Cron task rescheduled to $frequency, next run: " . date('Y.m.d H:i', $next_run) . " (Timezone: " . wp_timezone_string() . ")");
+    }
+}
 
     public static function deactivate() {
         $timestamp = wp_next_scheduled('archiver_process_urls');
