@@ -72,3 +72,14 @@ function archiver_run() {
     return $archiver;
 }
 add_action('plugins_loaded', 'archiver_run');
+
+
+// Integrate UpdatePulse Server for updates using PUC v5.3
+require_once plugin_dir_path(__FILE__) . 'lib/plugin-update-checker/plugin-update-checker.php';
+use YahnisElsts\PluginUpdateChecker\v5p3\PucFactory;
+
+$WpArchiverUpdateChecker = PucFactory::buildUpdateChecker(
+    'https://updates.weixiaoduo.com/wp-archiver.json',
+    __FILE__,
+    'wp-archiver'
+);

@@ -1,195 +1,199 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Archiver\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-06 09:41+0800\n"
-"PO-Revision-Date: 2025-04-06 09:41+0800\n"
+"PO-Revision-Date: 2025-04-06 02:00+0000\n"
 "Last-Translator: \n"
-"Language-Team: \n"
+"Language-Team: 简体中文\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.6\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Loco https://localise.biz/\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: archiver.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: "
-"__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Loco-Version: 2.6.11; wp-6.7.2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
 #: includes/class-archiver-admin.php:25
 msgid "Archiver Settings"
-msgstr ""
+msgstr "时光机设置"
 
 #: includes/class-archiver-admin.php:26 includes/class-archiver.php:25
 #: includes/class-archiver.php:223
 msgid "Archiver"
-msgstr ""
+msgstr "时光机"
 
 #: includes/class-archiver-admin.php:35
 msgid "You do not have sufficient permissions to access this page."
-msgstr ""
+msgstr "您没有足够的权限访问此页面。"
 
 #: includes/class-archiver-admin.php:42
 #, php-format
 msgid "Version: %s"
-msgstr ""
+msgstr "版本：%s"
 
 #: includes/class-archiver-admin.php:43
 msgid "Document"
-msgstr ""
+msgstr "文档"
 
 #: includes/class-archiver-admin.php:44
 msgid "Support"
-msgstr ""
+msgstr "支持"
 
 #: includes/class-archiver-admin.php:48
 msgid "Archive Statistics"
-msgstr ""
+msgstr "存档统计"
 
 #: includes/class-archiver-admin.php:49
 msgid "View statistics and records of Archive."
-msgstr ""
+msgstr "查看存档的统计数据和记录。"
 
 #: includes/class-archiver-admin.php:53
 msgid "Pending URLs"
-msgstr ""
+msgstr "待定 URL"
 
 #: includes/class-archiver-admin.php:57
 msgid "Total Archived"
-msgstr ""
+msgstr "总存档"
 
 #: includes/class-archiver-admin.php:61
 msgid "Failed Snapshots"
-msgstr ""
+msgstr "失败快照"
 
 #: includes/class-archiver-admin.php:65
 msgid "Last Run"
-msgstr ""
+msgstr "上次运行"
 
 #: includes/class-archiver-admin.php:66
 msgid "Never"
-msgstr ""
+msgstr "从未"
 
 #: includes/class-archiver-admin.php:69
 msgid "Next Run"
-msgstr ""
+msgstr "下次运行"
 
 #: includes/class-archiver-admin.php:72
 msgid "Not scheduled"
-msgstr ""
+msgstr "无计划任务"
 
 #: includes/class-archiver-admin.php:80
 msgid "General Settings"
-msgstr ""
+msgstr "常规设置"
 
 #: includes/class-archiver-admin.php:81
 msgid "Snapshot Tools"
-msgstr ""
+msgstr "快照工具"
 
 #: includes/class-archiver-admin.php:82
 msgid "About"
-msgstr ""
+msgstr "关于"
 
 #: includes/class-archiver-admin.php:92
 msgid "Content Types to Archive"
-msgstr ""
+msgstr "要存档的内容类型"
 
 #: includes/class-archiver-admin.php:93
 msgid ""
 "Select which content types should be automatically archived when published "
 "or updated."
-msgstr ""
+msgstr "选择发布或更新时应自动存档的内容类型。"
 
 #: includes/class-archiver-admin.php:96
 msgid "Post Types"
-msgstr ""
+msgstr "文章类型"
 
 #: includes/class-archiver-admin.php:111
 msgid "Update Frequency"
-msgstr ""
+msgstr "更新频率"
 
 #: includes/class-archiver-admin.php:112
 msgid "Adjust the update frequency to avoid excessive requests."
-msgstr ""
+msgstr "调整更新频率，避免过多的请求。"
 
 #: includes/class-archiver-admin.php:116
 msgid "Frequency"
-msgstr ""
+msgstr "频率"
 
 #: includes/class-archiver-admin.php:120
 msgid "Hourly"
-msgstr ""
+msgstr "每小时"
 
 #: includes/class-archiver-admin.php:123
 msgid "Twice Daily"
-msgstr ""
+msgstr "每天两次"
 
 #: includes/class-archiver-admin.php:126
 msgid "Daily"
-msgstr ""
+msgstr "每天"
 
 #: includes/class-archiver-admin.php:129
 msgid "Weekly"
-msgstr ""
+msgstr "每周"
 
 #: includes/class-archiver-admin.php:132
 msgid "How often should the plugin check for new archives?"
-msgstr ""
+msgstr "插件应该多久检查一次新存档？"
 
 #: includes/class-archiver-admin.php:136
 msgid "Save Settings"
-msgstr ""
+msgstr "保存设置"
 
 #: includes/class-archiver-admin.php:145
 msgid "Pending Updates"
-msgstr ""
+msgstr "待更新"
 
 #: includes/class-archiver-admin.php:152
 msgid "Run Manual Update Now"
-msgstr ""
+msgstr "立即运行手动更新"
 
 #: includes/class-archiver-admin.php:153
 msgid "Process all pending URLs immediately."
-msgstr ""
+msgstr "立即处理所有待处理的 URL。"
 
 #: includes/class-archiver-admin.php:156
 msgid "Bulk Actions"
-msgstr ""
+msgstr "批量操作"
 
 #: includes/class-archiver-admin.php:161
 msgid "Select bulk action..."
-msgstr ""
+msgstr "选择批量操作..."
 
 #: includes/class-archiver-admin.php:162
 msgid "Archive all published posts"
-msgstr ""
+msgstr "归档所有已发布文章"
 
 #: includes/class-archiver-admin.php:163
 msgid "Clear pending queue"
-msgstr ""
+msgstr "清除待处理队列"
 
 #: includes/class-archiver-admin.php:169
 msgid "Apply"
-msgstr ""
+msgstr "应用"
 
 #: includes/class-archiver-admin.php:172
 msgid "Debug Tools"
-msgstr ""
+msgstr "调试工具"
 
 #: includes/class-archiver-admin.php:178
 msgid "Clear Cache"
-msgstr ""
+msgstr "清除缓存"
 
 #: includes/class-archiver-admin.php:179
 msgid "Clear all cached snapshot data."
-msgstr ""
+msgstr "清除所有缓存的快照数据。"
 
 #: includes/class-archiver-admin.php:189
 msgid "About Internet Archive"
-msgstr ""
+msgstr "关于互联网档案馆"
 
 #: includes/class-archiver-admin.php:191
 msgid ""
@@ -198,30 +202,32 @@ msgid ""
 "One of its most well-known services is the Wayback Machine, which allows "
 "users to view archived versions of web pages across time."
 msgstr ""
+"Internet Archive 是一个非营利性数字图书馆，它为子孙后代保存网页、书籍、录音、视频和软件。其最著名的服务之一是时间回溯器（Wayback "
+"Machine），它允许用户查看不同时期的网页存档版本。"
 
 #: includes/class-archiver-admin.php:193
 msgid "Why Archive Your Website?"
-msgstr ""
+msgstr "为什么要存档您的网站？"
 
 #: includes/class-archiver-admin.php:195
 msgid "Preserve your content against accidental deletion or server failures"
-msgstr ""
+msgstr "保护您的内容免遭意外删除或服务器故障"
 
 #: includes/class-archiver-admin.php:196
 msgid "Maintain a public record of your published work"
-msgstr ""
+msgstr "保留已发表作品的公开记录"
 
 #: includes/class-archiver-admin.php:197
 msgid "Protect against link rot (when external links stop working)"
-msgstr ""
+msgstr "防止链接失效（当外部链接无法访问时）"
 
 #: includes/class-archiver-admin.php:198
 msgid "Establish historical context and content provenance"
-msgstr ""
+msgstr "建立历史背景和内容出处"
 
 #: includes/class-archiver-admin.php:201
 msgid "About WP Archiver"
-msgstr ""
+msgstr "关于文派时光机（WP Archiver）"
 
 #: includes/class-archiver-admin.php:202
 msgid ""
@@ -229,186 +235,188 @@ msgid ""
 "Archive whenever you publish or update posts, pages, or other content types. "
 "It helps ensure your valuable content is preserved for the long term."
 msgstr ""
+"每当您发布或更新文章、页面或其他内容类型时，此插件都会自动将您的 WordPress 内容存档到 Internet "
+"Archive。它有助于确保您的宝贵内容得到长期保存。"
 
 #: includes/class-archiver-admin.php:204
 msgid "Best Practices"
-msgstr ""
+msgstr "最佳实践"
 
 #: includes/class-archiver-admin.php:206
 msgid "Archive important content immediately after publication"
-msgstr ""
+msgstr "重要内容发布后立即归档"
 
 #: includes/class-archiver-admin.php:207
 msgid "For large sites, use weekly archiving to avoid overwhelming the service"
-msgstr ""
+msgstr "对于大型网站，请使用每周归档以避免服务过载"
 
 #: includes/class-archiver-admin.php:208
 msgid ""
 "Regularly check your archived content to ensure it was captured correctly"
-msgstr ""
+msgstr "定期检查存档内容，以确保其被正确捕获"
 
 #: includes/class-archiver-admin.php:209
 msgid "Consider manually archiving key pages after major updates"
-msgstr ""
+msgstr "考虑在重大更新后手动归档关键页面"
 
 #: includes/class-archiver-admin.php:212
 msgid "Thank you for helping preserve the web by archiving your content!"
-msgstr ""
+msgstr "感谢您通过存档内容来帮助保护网络！"
 
 #: includes/class-archiver-admin.php:233
 msgid "Manual update triggered. The update will run in the background."
-msgstr ""
+msgstr "已触发手动更新。更新将在后台运行。"
 
 #: includes/class-archiver-admin.php:250
 msgid "Please select at least one post type to archive."
-msgstr ""
+msgstr "请至少选择一个要存档的文章类型。"
 
 #: includes/class-archiver-admin.php:261
 msgid "Invalid post types selected."
-msgstr ""
+msgstr "选择的文章类型无效。"
 
 #: includes/class-archiver-admin.php:276
 msgid "Settings saved successfully."
-msgstr ""
+msgstr "设置保存成功。"
 
 #: includes/class-archiver-admin.php:292
 msgid "Pending queue has been cleared."
-msgstr ""
+msgstr "待处理队列已被清除。"
 
 #: includes/class-archiver-admin.php:300
 msgid "Please select a valid bulk action."
-msgstr ""
+msgstr "请选择有效的批量操作。"
 
 #: includes/class-archiver-admin.php:322
 #, php-format
 msgid "%d posts have been added to the archive queue."
-msgstr ""
+msgstr "%d 个文章已添加到存档队列。"
 
 #: includes/class-archiver-admin.php:337
 msgid "All cached data has been cleared."
-msgstr ""
+msgstr "所有缓存数据已被清除。"
 
 #: includes/class-archiver-admin.php:345
 msgid "No pending updates."
-msgstr ""
+msgstr "没有待处理的更新。"
 
 #: includes/class-archiver-admin.php:348
 #, php-format
 msgid "Total pending URLs: %d"
-msgstr ""
+msgstr "待处理的 URL 总数：%d"
 
 #: includes/class-archiver-admin.php:355
 msgid "more"
-msgstr ""
+msgstr "更多"
 
 #: includes/class-archiver.php:89 includes/class-archiver.php:105
 #: includes/class-archiver.php:124
 msgid "Archives"
-msgstr ""
+msgstr "存档"
 
 #: includes/class-archiver.php:142
 msgid ""
 "No archives yet. A snapshot request has been scheduled and will be processed "
 "soon."
-msgstr ""
+msgstr "尚无存档。快照请求已安排并将很快处理。"
 
 #: includes/class-archiver.php:144
 msgid "There are no archives of this URL."
-msgstr ""
+msgstr "此 URL 没有存档。"
 
 #: includes/class-archiver.php:164
 msgid "See all snapshots ↗"
-msgstr ""
+msgstr "查看所有快照 ↗"
 
 #: includes/class-archiver.php:167
 msgid "Archive Now"
-msgstr ""
+msgstr "立即存档"
 
 #: includes/class-archiver.php:175
 msgid "Security check failed. Please try again."
-msgstr ""
+msgstr "安全检查失败。请重试。"
 
 #: includes/class-archiver.php:180
 msgid "You do not have permission to perform this action."
-msgstr ""
+msgstr "您无权执行此操作。"
 
 #: includes/class-archiver.php:186
 msgid "Invalid URL provided."
-msgstr ""
+msgstr "提供的 URL 无效。"
 
 #: includes/class-archiver.php:203
 msgid "Snapshot created successfully!"
-msgstr ""
+msgstr "快照创建成功！"
 
 #: includes/class-archiver.php:208
 msgid "Failed to retrieve snapshots."
-msgstr ""
+msgstr "无法检索快照。"
 
 #: includes/class-archiver.php:235
 msgid "Snapshots"
-msgstr ""
+msgstr "快照"
 
 #: includes/class-archiver.php:242
 msgid "Trigger Snapshot"
-msgstr ""
+msgstr "触发快照"
 
 #: includes/class-archiver.php:445
 msgid "Triggering snapshot..."
-msgstr ""
+msgstr "正在触发快照..."
 
 #: includes/class-archiver.php:446
 msgid "Snapshot triggered successfully!"
-msgstr ""
+msgstr "快照触发成功！"
 
 #: includes/class-archiver.php:447 includes/class-archiver.php:661
 msgid "Failed to trigger snapshot."
-msgstr ""
+msgstr "无法触发快照。"
 
 #: includes/class-archiver.php:475
 msgid ""
 "Archiver is currently disabled via the <code>archiver_can_run</code> filter."
-msgstr ""
+msgstr "时光机存档器当前已通过 <code>archiver_can_run</code> 过滤器禁用。"
 
 #: includes/class-archiver.php:491
 msgid "You do not have permissions to trigger snapshots."
-msgstr ""
+msgstr "您没有触发快照的权限。"
 
 #: includes/class-archiver.php:495
 msgid "Invalid URL parameter."
-msgstr ""
+msgstr "URL 参数无效。"
 
 #: includes/class-archiver.php:500
 msgid "Snapshot request recorded and will be processed soon."
-msgstr ""
+msgstr "快照请求已记录并将很快处理。"
 
 #: includes/class-archiver.php:643
 msgid "URL cannot be empty."
-msgstr ""
+msgstr "URL 不能为空。"
 
 #: includes/class-archiver.php:647
 msgid "Snapshot already taken recently."
-msgstr ""
+msgstr "最近已拍摄快照。"
 
 #: js/archiver.js:36
 msgid "Unknown error occurred"
-msgstr ""
+msgstr "发生未知错误"
 
 #. Plugin Name of the plugin/theme
 msgid "WP Archiver"
-msgstr ""
+msgstr "文派时光机"
 
 #. Plugin URI of the plugin/theme
 msgid "http://wenpai.org/plugins/wp-archiver"
-msgstr ""
+msgstr "http://wenpai.org/plugins/wp-archiver"
 
 #. Description of the plugin/theme
 msgid "Archive your content using the Wayback Machine."
-msgstr ""
+msgstr "使用 Wayback Machine 存档您的内容。"
 
 #. Author of the plugin/theme
 msgid "WenPai.org"
-msgstr ""
+msgstr "文派开源"
 
 #. Author URI of the plugin/theme
 msgid "https://wenpai.org/"
-msgstr ""
+msgstr "https://wenpai.org/"
