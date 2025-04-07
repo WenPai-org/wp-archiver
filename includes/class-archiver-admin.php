@@ -43,7 +43,7 @@ class Archiver_Admin {
             <a href="https://sharecms.com/document/wp-archiver" target="_blank" class="button button-secondary" style="margin-left: 10px;"><?php esc_html_e('Document', 'archiver'); ?></a>
             <a href="https://sharecms.com/forums/" target="_blank" class="button button-secondary"><?php esc_html_e('Support', 'archiver'); ?></a>
         </h1>
-        
+
 <div class="card">
                         <h3><?php _e('Archive Statistics', 'archiver'); ?></h3>
                         <p><?php _e('View statistics and records of Archive.', 'archiver'); ?></p>
@@ -67,7 +67,7 @@ class Archiver_Admin {
                             </div>
                             <div class="archiver-stat-card">
                                 <h3><?php _e('Next Run', 'archiver'); ?></h3>
-                                <div class="stat-value"><?php 
+                                <div class="stat-value"><?php
                                     $next_run = wp_next_scheduled('archiver_process_urls');
                                     echo $next_run ? esc_html(date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $next_run)) : __('Not scheduled', 'archiver');
                                 ?></div>
@@ -82,7 +82,7 @@ class Archiver_Admin {
             <a href="#about" class="nav-tab" data-tab="about"><?php _e('About', 'archiver'); ?></a>
         </h2>
         <?php settings_errors('archiver_messages'); ?>
-        
+
         <div id="archiver-tabs-content">
             <div id="general" class="archiver-tab-content" style="display: block;">
                 <form method="post" action="">
@@ -98,8 +98,8 @@ class Archiver_Admin {
                                         <fieldset>
                                             <?php foreach ($post_types as $post_type) : ?>
                                                 <label>
-                                                    <input type="checkbox" name="archiver_post_types[]" 
-                                                        value="<?php echo esc_attr($post_type->name); ?>" 
+                                                    <input type="checkbox" name="archiver_post_types[]"
+                                                        value="<?php echo esc_attr($post_type->name); ?>"
                                                         <?php checked(in_array($post_type->name, $selected_post_types)); ?>>
                                                     <?php echo esc_html($post_type->label); ?>
                                                 </label><br>
@@ -138,7 +138,7 @@ class Archiver_Admin {
                     </div>
                 </form>
             </div>
-            
+
             <div id="tools" class="archiver-tab-content" style="display: none;">
                 <div class="postbox">
                     <div class="inside">
@@ -147,8 +147,8 @@ class Archiver_Admin {
                         <form method="post" action="">
                             <?php wp_nonce_field('archiver_manual_update_nonce'); ?>
                             <p>
-                                <input type="submit" name="archiver_trigger_update" 
-                                       class="button button-primary" 
+                                <input type="submit" name="archiver_trigger_update"
+                                       class="button button-primary"
                                        value="<?php esc_attr_e('Run Manual Update Now', 'archiver'); ?>">
                                 <span class="description"><?php _e('Process all pending URLs immediately.', 'archiver'); ?></span>
                             </p>
@@ -164,8 +164,8 @@ class Archiver_Admin {
                                 </select>
                             </p>
                             <p>
-                                <input type="submit" name="archiver_submit_bulk_action" 
-                                       class="button button-secondary" 
+                                <input type="submit" name="archiver_submit_bulk_action"
+                                       class="button button-secondary"
                                        value="<?php esc_attr_e('Apply', 'archiver'); ?>">
                             </p>
                         </form>
@@ -173,8 +173,8 @@ class Archiver_Admin {
                         <form method="post" action="">
                             <?php wp_nonce_field('archiver_debug_tools_nonce'); ?>
                             <p>
-                                <input type="submit" name="archiver_clear_cache" 
-                                       class="button button-secondary" 
+                                <input type="submit" name="archiver_clear_cache"
+                                       class="button button-secondary"
                                        value="<?php esc_attr_e('Clear Cache', 'archiver'); ?>">
                                 <span class="description"><?php _e('Clear all cached snapshot data.', 'archiver'); ?></span>
                             </p>
@@ -187,9 +187,9 @@ class Archiver_Admin {
     <div class="postbox">
         <div class="inside">
             <h3><?php _e('About Internet Archive', 'archiver'); ?></h3>
-            
+
             <p><?php _e('The Internet Archive is a non-profit digital library that preserves web pages, books, audio recordings, videos, and software for future generations. One of its most well-known services is the Wayback Machine, which allows users to view archived versions of web pages across time.', 'archiver'); ?></p>
-            
+
             <h4><?php _e('Why Archive Your Website?', 'archiver'); ?></h4>
             <ul style="list-style: decimal; padding: inherit;">
                 <li><?php _e('Preserve your content against accidental deletion or server failures', 'archiver'); ?></li>
@@ -197,10 +197,10 @@ class Archiver_Admin {
                 <li><?php _e('Protect against link rot (when external links stop working)', 'archiver'); ?></li>
                 <li><?php _e('Establish historical context and content provenance', 'archiver'); ?></li>
             </ul>
-            
+
             <h3><?php _e('About WP Archiver', 'archiver'); ?></h3>
             <p><?php _e('This plugin automatically archives your WordPress content to the Internet Archive whenever you publish or update posts, pages, or other content types. It helps ensure your valuable content is preserved for the long term.', 'archiver'); ?></p>
-            
+
             <h3><?php _e('Best Practices', 'archiver'); ?></h3>
             <ul style="list-style: decimal; padding: inherit;">
                 <li><?php _e('Archive important content immediately after publication', 'archiver'); ?></li>
@@ -208,7 +208,7 @@ class Archiver_Admin {
                 <li><?php _e('Regularly check your archived content to ensure it was captured correctly', 'archiver'); ?></li>
                 <li><?php _e('Consider manually archiving key pages after major updates', 'archiver'); ?></li>
             </ul>
-            
+
             <p><?php _e('Thank you for helping preserve the web by archiving your content!', 'archiver'); ?></p>
         </div>
     </div>
@@ -221,27 +221,30 @@ class Archiver_Admin {
     <?php
 }
 
-    public function handle_settings_actions() {
-        if (isset($_POST['submit']) && check_admin_referer('archiver_settings_nonce')) {
-            $this->save_settings();
-        }
-        if (isset($_POST['archiver_trigger_update']) && check_admin_referer('archiver_manual_update_nonce')) {
-            $this->archiver->process_urls_for_update();
-            add_settings_error(
-                'archiver_messages',
-                'archiver_message',
-                __('Manual update triggered. The update will run in the background.', 'archiver'),
-                'updated'
-            );
-        }
-        if (isset($_POST['archiver_submit_bulk_action']) && check_admin_referer('archiver_bulk_actions_nonce')) {
-            $this->handle_bulk_actions();
-        }
-        if (isset($_POST['archiver_clear_cache']) && check_admin_referer('archiver_debug_tools_nonce')) {
-            $this->clear_cache();
-        }
+public function handle_settings_actions() {
+    if (!isset($_GET['page']) || $_GET['page'] !== 'archiver-settings') {
+        return;
     }
 
+    if (isset($_POST['submit']) && check_admin_referer('archiver_settings_nonce')) {
+        $this->save_settings();
+    }
+    if (isset($_POST['archiver_trigger_update']) && check_admin_referer('archiver_manual_update_nonce')) {
+        $this->archiver->process_urls_for_update();
+        add_settings_error(
+            'archiver_messages',
+            'archiver_message',
+            __('Manual update triggered. The update will run in the background.', 'archiver'),
+            'updated'
+        );
+    }
+    if (isset($_POST['archiver_submit_bulk_action']) && check_admin_referer('archiver_bulk_actions_nonce')) {
+        $this->handle_bulk_actions();
+    }
+    if (isset($_POST['archiver_clear_cache']) && check_admin_referer('archiver_debug_tools_nonce')) {
+        $this->clear_cache();
+    }
+}
     private function save_settings() {
         if (!isset($_POST['archiver_post_types']) || !is_array($_POST['archiver_post_types'])) {
             add_settings_error(
@@ -265,8 +268,8 @@ class Archiver_Admin {
         }
         update_option('archiver_post_types', $selected_types);
         $valid_frequencies = ['hourly', 'twicedaily', 'daily', 'weekly'];
-        $frequency = isset($_POST['archiver_update_frequency']) && in_array($_POST['archiver_update_frequency'], $valid_frequencies) 
-            ? $_POST['archiver_update_frequency'] 
+        $frequency = isset($_POST['archiver_update_frequency']) && in_array($_POST['archiver_update_frequency'], $valid_frequencies)
+            ? $_POST['archiver_update_frequency']
             : 'daily';
         update_option('archiver_update_frequency', $frequency);
         $this->archiver->reschedule_cron_task($frequency);
