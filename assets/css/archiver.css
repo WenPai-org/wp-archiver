@@ -1,0 +1,476 @@
+/**
+ * WP Archiver 样式表
+ */
+
+/* CSS 变量定义 */
+:root {
+    --archiver-primary: #2271b1;
+    --archiver-primary-hover: #135e96;
+    --archiver-success: #00a32a;
+    --archiver-warning: #dba617;
+    --archiver-error: #d63638;
+    --archiver-info: #72aee6;
+    --archiver-border: #c3c4c7;
+    --archiver-bg: #f0f0f1;
+    --archiver-bg-white: #ffffff;
+    --archiver-text: #3c434a;
+    --archiver-text-light: #646970;
+    --archiver-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --archiver-radius: 4px;
+    --archiver-transition: all 0.3s ease;
+}
+
+/* 管理页面基础样式 */
+.archiver-admin-wrap {
+    margin: 20px 20px 20px 2px;
+}
+
+.archiver-admin-wrap .card {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    max-width: unset;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+/* 标签页样式 */
+.archiver-settings-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    border-bottom: 1px solid #c3c4c7;
+    margin-bottom: 20px;
+}
+
+.settings-tab {
+    padding: 8px 16px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-bottom: 2px solid transparent;
+}
+
+.settings-tab.active {
+    border-bottom: 2px solid #007cba;
+    font-weight: 600;
+    background: #f0f0f1;
+}
+
+.settings-tab:hover:not(.active) {
+    background: #f0f0f1;
+    border-bottom-color: #dcdcde;
+}
+
+/* 开关样式 */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 20px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+
+/* 通知样式 */
+.notice {
+    padding: 8px 12px;
+    border-radius: 3px;
+}
+
+.notice-success {
+    background-color: #dff0d8;
+    border-left: 4px solid #46b450;
+}
+
+.notice-error {
+    background-color: #f2dede;
+    border-left: 4px solid #dc3232;
+}
+
+/* 服务状态样式 */
+.service-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ccc;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.service-status.online .status-dot {
+    background: #46b450;
+}
+
+.service-status.offline .status-dot {
+    background: #dc3232;
+    animation: none;
+}
+
+/* 工具网格 */
+.archiver-tools-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.tool-section {
+    padding: 15px;
+    background: var(--archiver-bg);
+    border-radius: var(--archiver-radius);
+}
+
+.tool-section h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* 队列样式 */
+.queue-status {
+    background: #f0f0f1;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 15px 0;
+}
+
+.queue-list {
+    max-height: 200px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+}
+
+.queue-list ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.queue-list li {
+    margin: 5px 0;
+    word-break: break-all;
+    font-family: monospace;
+    font-size: 13px;
+}
+
+/* 表格样式 */
+.wp-list-table {
+    margin-top: 0.5em;
+}
+
+.wp-list-table th {
+    font-weight: 600;
+}
+
+/* Meta Box 样式 */
+.archiver-metabox {
+    padding: 12px;
+}
+
+.archiver-service-tabs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--archiver-border);
+}
+
+.archiver-service-tab {
+    padding: 8px 16px;
+    border: none;
+    background: none;
+    color: var(--archiver-text);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: var(--archiver-transition);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+}
+
+.archiver-service-tab:hover {
+    color: var(--archiver-primary);
+}
+
+.archiver-service-tab.active {
+    color: var(--archiver-primary);
+    border-bottom-color: var(--archiver-primary);
+}
+
+#archiver-snapshots {
+    min-height: 80px;
+    margin-bottom: 15px;
+    background: var(--archiver-bg);
+    border-radius: 4px;
+    padding: 15px;
+}
+
+.archiver-loading {
+    text-align: center;
+    color: var(--archiver-text-light);
+}
+
+.archiver-loading .spinner {
+    float: none;
+    margin: 0 8px 0 0;
+}
+
+.archiver-snapshot-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.archiver-snapshot-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--archiver-border);
+    transition: var(--archiver-transition);
+}
+
+.archiver-snapshot-list li:last-child {
+    border-bottom: none;
+}
+
+.archiver-snapshot-list li:hover {
+    padding-left: 8px;
+}
+
+.archiver-snapshot-list a {
+    text-decoration: none;
+    color: var(--archiver-primary);
+    font-size: 13px;
+}
+
+.archiver-snapshot-list a:hover {
+    color: var(--archiver-primary-hover);
+    text-decoration: underline;
+}
+
+.archiver-no-snapshots {
+    color: var(--archiver-text-light);
+    font-style: italic;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.archiver-view-all {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.archiver-view-all a {
+    color: var(--archiver-primary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.archiver-view-all a:hover {
+    color: var(--archiver-primary-hover);
+    text-decoration: underline;
+}
+
+.archiver-view-all .dashicons {
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.archiver-actions {
+    display: flex;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid var(--archiver-border);
+}
+
+#archiver-immediate-snapshot {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#archiver-immediate-snapshot .dashicons {
+    font-size: 16px;
+}
+
+#archiver-immediate-snapshot.updating-message:before {
+    content: "\f463";
+    display: inline-block;
+    font-family: dashicons;
+    animation: spin 1s infinite linear;
+    margin-right: 5px;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+#archiver-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: var(--archiver-text-light);
+}
+
+#archiver-status.success {
+    color: var(--archiver-success);
+}
+
+#archiver-status.error {
+    color: var(--archiver-error);
+}
+
+#archiver-status .dashicons {
+    font-size: 16px;
+}
+
+/* Admin Bar 样式 */
+#wp-admin-bar-archiver .ab-item {
+    transition: var(--archiver-transition);
+}
+
+#wp-admin-bar-archiver.archiver-success .ab-item {
+    color: var(--archiver-success) !important;
+}
+
+#wp-admin-bar-archiver.archiver-failure .ab-item {
+    color: var(--archiver-error) !important;
+}
+
+#wp-admin-bar-archiver .ab-icon {
+    margin-right: 6px !important;
+}
+
+#wp-admin-bar-archiver .ab-icon.dashicons-backup::before {
+    font-size: 20px;
+    line-height: 28px;
+}
+
+#wp-admin-bar-archiver-trigger .ab-item {
+    display: flex;
+    align-items: center;
+}
+
+#wp-admin-bar-archiver-trigger .ab-icon {
+    margin-left: 6px !important;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#wp-admin-bar-archiver-trigger .ab-icon::before {
+    content: "\f463";
+    font-family: dashicons;
+    font-size: 16px;
+}
+
+#wp-admin-bar-archiver.archiver-active .ab-icon,
+#wp-admin-bar-archiver-trigger.archiver-active .ab-icon {
+    opacity: 1;
+    animation: spin 1s infinite linear;
+}
+
+/* 表单样式 */
+.form-table th {
+    font-weight: 600;
+    width: 200px;
+}
+
+/* 按钮样式 */
+.button {
+    border-radius: 3px;
+    font-weight: 400;
+    transition: var(--archiver-transition);
+}
+
+.button-small {
+    font-size: 11px;
+    padding: 0 8px;
+    line-height: 22px;
+    height: 24px;
+}
+
+/* 描述文字 */
+.description {
+    font-size: 13px;
+    color: var(--archiver-text-light);
+    margin-top: 5px;
+}
+
+/* 响应式设计 */
+@media (max-width: 782px) {
+    .archiver-tools-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .archiver-service-tabs {
+        flex-wrap: wrap;
+    }
+
+    .archiver-service-tab {
+        flex: 1 1 auto;
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .form-table th {
+        width: auto;
+    }
+}
+
+/* 焦点样式 */
+.archiver-service-tab:focus,
+.settings-tab:focus,
+.button:focus {
+    outline: 2px solid var(--archiver-primary);
+    outline-offset: 2px;
+}
