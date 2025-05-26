@@ -274,3 +274,14 @@ add_filter('archiver_queue_limit', function($limit) {
 add_filter('archiver_batch_size', function($size) {
     return get_option('archiver_batch_size', 3);
 });
+
+
+// Integrate UpdatePulse Server for updates using PUC v5.3
+require_once plugin_dir_path(__FILE__) . 'lib/plugin-update-checker/plugin-update-checker.php';
+use YahnisElsts\PluginUpdateChecker\v5p3\PucFactory;
+
+$WpArchiverUpdateChecker = PucFactory::buildUpdateChecker(
+    'https://updates.weixiaoduo.com/wp-archiver.json',
+    __FILE__,
+    'wp-archiver'
+);
