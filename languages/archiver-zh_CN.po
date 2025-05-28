@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WP Archiver\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-06 09:41+0800\n"
-"PO-Revision-Date: 2025-05-28 14:29+0800\n"
+"PO-Revision-Date: 2025-05-28 14:46+0800\n"
 "Last-Translator: \n"
 "Language-Team: 简体中文\n"
 "Language: zh_CN\n"
@@ -537,12 +537,12 @@ msgstr "必须启用主要服务。"
 
 #: includes/class-archiver-dashboard.php:351
 msgid "Process failed"
-msgstr "进程失败"
+msgstr "处理失败"
 
 #: includes/class-archiver-dashboard.php:115
 #: includes/class-archiver-dashboard.php:358
 msgid "Process Queue"
-msgstr "进程队列"
+msgstr "处理队列"
 
 #: includes/class-archiver-admin.php:938
 msgid "Process Queue Now"
