@@ -1,5 +1,6 @@
 /**
- * WP Archiver 现代化前端脚本
+ * WP Archiver Modern Frontend Script
+ * Complete version with all functionality
  */
 
 (function($) {
@@ -8,15 +9,18 @@
     const Archiver = {
 
         config: {
-            checkInterval: 5000,
-            maxChecks: 12,
+            checkInterval: 3000,
+            maxChecks: 20,
             fadeInDuration: 300,
             cachePrefix: 'archiver_cache_',
-            debounceDelay: 300
+            debounceDelay: 300,
+            retryDelay: 1000,
+            maxRetries: 3
         },
 
         currentService: null,
         serviceCheckTimers: {},
+        loadingCache: {},
 
         init: function() {
             $(document).ready(() => {
@@ -25,11 +29,12 @@
                 this.initAdminPage();
                 this.initLazyLoading();
                 this.initServiceChecks();
+                this.addNotificationStyles();
             });
         },
 
         /**
-         * 初始化元框
+         * Initialize metabox
          */
         initMetabox: function() {
             const $container = $('#archiver-snapshots');
@@ -42,7 +47,7 @@
 
             this.currentService = service;
 
-            // 服务标签切换
+            // Service tab switching
             $('.archiver-service-tab').on('click', (e) => {
                 e.preventDefault();
                 const $tab = $(e.currentTarget);
@@ -55,10 +60,10 @@
                 this.loadSnapshots(url, $container, selectedService);
             });
 
-            // 延迟加载快照
+            // Load snapshots with retry mechanism
             this.loadSnapshots(url, $container, service);
 
-            // 立即存档按钮
+            // Immediate archive button
             $('#archiver-immediate-snapshot').on('click', (e) => {
                 e.preventDefault();
                 this.triggerSnapshot(url, this.currentService);
@@ -66,19 +71,21 @@
         },
 
         /**
-         * 初始化管理栏
+         * Initialize admin bar
          */
         initAdminBar: function() {
             const $trigger = $('#wp-admin-bar-archiver-trigger a');
             if (!$trigger.length) return;
 
-            // 延迟加载快照计数
+            // Load snapshot count with delay
             const $countItem = $('#wp-admin-bar-archiver-snapshots');
             if ($countItem.length && archiver.url) {
-                this.updateAdminBarCount(archiver.url);
+                setTimeout(() => {
+                    this.updateAdminBarCount(archiver.url);
+                }, 500);
             }
 
-            // 触发快照
+            // Trigger snapshot
             $trigger.on('click', (e) => {
                 e.preventDefault();
                 this.triggerAdminBarSnapshot();
@@ -86,41 +93,34 @@
         },
 
         /**
-         * 初始化管理页面
+         * Initialize admin page
          */
         initAdminPage: function() {
-            // 标签切换
-            $('.archiver-tab').on('click', function(e) {
+            // Tab switching
+            $('.settings-tab').on('click', function(e) {
                 e.preventDefault();
                 const $tab = $(this);
                 const tabId = $tab.data('tab');
 
-                $('.archiver-tab').removeClass('active');
+                $('.settings-tab').removeClass('active');
                 $tab.addClass('active');
 
-                $('.archiver-tab-content').removeClass('active');
-                $('#' + tabId).addClass('active');
+                $('.settings-section').hide();
+                $('.settings-section[data-section="' + tabId + '"]').show();
 
-                // 保存用户偏好
+                // Save user preference
                 if (typeof(Storage) !== "undefined") {
                     localStorage.setItem('archiver_active_tab', tabId);
                 }
             });
 
-            // 恢复上次的标签
+            // Restore last tab
             const savedTab = localStorage.getItem('archiver_active_tab');
-            if (savedTab && $(`.archiver-tab[data-tab="${savedTab}"]`).length) {
-                $(`.archiver-tab[data-tab="${savedTab}"]`).trigger('click');
+            if (savedTab && $(`.settings-tab[data-tab="${savedTab}"]`).length) {
+                $(`.settings-tab[data-tab="${savedTab}"]`).trigger('click');
             }
 
-            // 标签链接
-            $('.archiver-tab-link').on('click', function(e) {
-                e.preventDefault();
-                const tab = $(this).attr('href').replace('#', '');
-                $(`.archiver-tab[data-tab="${tab}"]`).trigger('click');
-            });
-
-            // 测试服务连接
+            // Test service connection
             $('.test-service').on('click', (e) => {
                 e.preventDefault();
                 const $button = $(e.currentTarget);
@@ -130,48 +130,50 @@
         },
 
         /**
-         * 初始化服务检查
+         * Initialize service checks
          */
         initServiceChecks: function() {
-            if ($('.archiver-service-card').length === 0) return;
+            if ($('.service-status').length === 0) return;
 
-            // 检查所有服务状态
-            $('.archiver-service-card').each((index, element) => {
-                const $card = $(element);
-                const service = $card.find('.test-service').data('service');
-                if (service) {
-                    this.checkServiceStatus(service);
+            // Check all service statuses
+            $('.service-status').each((index, element) => {
+                const $status = $(element);
+                const serviceId = $status.attr('id').replace('status-', '');
+                if (serviceId) {
+                    setTimeout(() => {
+                        this.checkServiceStatus(serviceId);
+                    }, index * 200); // Staggered loading
                 }
             });
         },
 
         /**
-         * 检查服务状态
+         * Check service status
          */
         checkServiceStatus: function(service) {
-            const $status = $(`#service-status-${service}`);
+            const $status = $(`#status-${service}`);
             if (!$status.length) return;
 
-            // 清除现有定时器
+            // Clear existing timer
             if (this.serviceCheckTimers[service]) {
                 clearTimeout(this.serviceCheckTimers[service]);
             }
 
             $status.removeClass('online offline').find('.status-text').text(archiver.i18n.checking);
 
-            // 模拟检查延迟
+            // Simulate check with realistic delay
             this.serviceCheckTimers[service] = setTimeout(() => {
-                // 根据服务配置判断状态
-                const isEnabled = archiver.enabled_services[service];
+                // Check if service is enabled
+                const isEnabled = archiver.enabled_services && archiver.enabled_services[service];
                 const statusClass = isEnabled ? 'online' : 'offline';
                 const statusText = isEnabled ? archiver.i18n.online : archiver.i18n.offline;
 
                 $status.addClass(statusClass).find('.status-text').text(statusText);
-            }, 1000);
+            }, 800 + Math.random() * 400);
         },
 
         /**
-         * 测试服务连接
+         * Test service connection
          */
         testServiceConnection: function(service, $button) {
             const originalText = $button.text();
@@ -185,6 +187,7 @@
                     service: service,
                     nonce: archiver.admin_nonce
                 },
+                timeout: 10000,
                 success: (response) => {
                     if (response.success) {
                         this.showNotification(response.data.message, 'success');
@@ -193,8 +196,12 @@
                         this.showNotification(response.data.message || archiver.i18n.test_failed, 'error');
                     }
                 },
-                error: () => {
-                    this.showNotification(archiver.i18n.test_failed, 'error');
+                error: (xhr, status, error) => {
+                    let message = archiver.i18n.test_failed;
+                    if (status === 'timeout') {
+                        message = 'Connection timeout - service may be slow';
+                    }
+                    this.showNotification(message, 'error');
                 },
                 complete: () => {
                     $button.prop('disabled', false).text(originalText);
@@ -203,7 +210,7 @@
         },
 
         /**
-         * 延迟加载
+         * Initialize lazy loading
          */
         initLazyLoading: function() {
             if ('IntersectionObserver' in window) {
@@ -228,23 +235,34 @@
         },
 
         /**
-         * 加载快照
+         * Load snapshots with enhanced error handling
          */
-        loadSnapshots: function(url, $container, service = null) {
-            // 检查本地缓存
-            const cacheKey = this.getCacheKey(url, service);
-            const cached = this.getCache(cacheKey);
-            if (cached) {
-                this.displaySnapshots(cached, $container);
-                // 后台检查更新
-                this.checkForUpdates(url, $container, service);
-                return;
+        loadSnapshots: function(url, $container, service = null, retryCount = 0) {
+            if (retryCount === 0) {
+                // Check local cache first
+                const cacheKey = this.getCacheKey(url, service);
+                const cached = this.getCache(cacheKey);
+                if (cached && cached.html) {
+                    this.displaySnapshots(cached, $container);
+                    // Background check for updates
+                    setTimeout(() => {
+                        this.checkForUpdates(url, $container, service);
+                    }, 2000);
+                    return;
+                }
             }
 
-            // 显示加载状态
+            // Prevent multiple simultaneous requests
+            const requestKey = `${url}_${service || 'default'}`;
+            if (this.loadingCache[requestKey]) {
+                return;
+            }
+            this.loadingCache[requestKey] = true;
+
+            // Show loading state
             this.showLoading($container);
 
-            // 从服务器获取
+            // Fetch from server
             $.ajax({
                 url: archiver.ajax_url,
                 type: 'POST',
@@ -254,40 +272,72 @@
                     url: url,
                     service: service
                 },
+                timeout: 15000,
                 success: (response) => {
+                    delete this.loadingCache[requestKey];
+
                     if (response.success) {
+                        const cacheKey = this.getCacheKey(url, service);
                         this.setCache(cacheKey, response.data);
                         this.displaySnapshots(response.data, $container);
                     } else {
-                        this.showError($container, response.data.message);
+                        this.showError($container, response.data?.message || 'Failed to load snapshots');
                     }
                 },
-                error: () => {
-                    this.showError($container, archiver.i18n.error);
+                error: (xhr, status, error) => {
+                    delete this.loadingCache[requestKey];
+
+                    // Retry mechanism
+                    if (retryCount < this.config.maxRetries) {
+                        setTimeout(() => {
+                            this.loadSnapshots(url, $container, service, retryCount + 1);
+                        }, this.config.retryDelay * (retryCount + 1));
+
+                        $container.html(`
+                            <div class="archiver-loading">
+                                <span class="spinner is-active"></span>
+                                ${archiver.i18n.loading} (Retry ${retryCount + 1}/${this.config.maxRetries})
+                            </div>
+                        `);
+                    } else {
+                        let errorMsg = 'Failed to load archive data';
+                        if (status === 'timeout') {
+                            errorMsg = 'Request timeout - archive service may be slow';
+                        } else if (xhr.status === 0) {
+                            errorMsg = 'Network error - please check your connection';
+                        }
+                        this.showError($container, errorMsg);
+                    }
                 }
             });
         },
 
         /**
-         * 显示快照
+         * Display snapshots with enhanced UI
          */
         displaySnapshots: function(data, $container) {
             if (!data.html || data.html.includes('archiver-no-snapshots')) {
-                $container.html(data.html || '<p class="archiver-no-snapshots">' + archiver.i18n.no_snapshots + '</p>');
+                const noSnapshotsHtml = `
+                    <div class="archiver-no-snapshots">
+                        <p><em>${archiver.i18n.no_snapshots}</em></p>
+                        <small>Snapshots will appear here after archiving is complete.</small>
+                    </div>
+                `;
+                $container.html(data.html || noSnapshotsHtml);
                 return;
             }
 
             $container.hide().html(data.html).fadeIn(this.config.fadeInDuration);
 
-            // 添加淡入动画
-            $container.find('li').each(function(index) {
+            // Enhanced animations
+            $container.find('.archiver-snapshot-list li').each(function(index) {
                 $(this).css({
                     opacity: 0,
                     transform: 'translateY(10px)'
-                }).delay(index * 50).animate({
+                }).delay(index * 100).animate({
                     opacity: 1
                 }, {
-                    duration: 300,
+                    duration: 400,
                     step: function(now, fx) {
                         if (fx.prop === 'opacity' && now > 0.5) {
                             $(this).css('transform', 'translateY(0)');
@@ -295,10 +345,18 @@
                     }
                 });
             });
+
+            // Add timestamp to links if missing
+            $container.find('a').each(function() {
+                const $link = $(this);
+                if (!$link.attr('title')) {
+                    $link.attr('title', 'Archived snapshot - opens in new tab');
+                }
+            });
         },
 
         /**
-         * 触发快照
+         * Trigger snapshot with enhanced feedback
          */
         triggerSnapshot: function(url, service = null) {
             const $button = $('#archiver-immediate-snapshot');
@@ -317,39 +375,45 @@
                     url: url,
                     service: service
                 },
+                timeout: 30000,
                 success: (response) => {
                     if (response.success) {
                         $status.removeClass('error').addClass('success')
                             .html('<span class="dashicons dashicons-yes"></span> ' + response.data.message);
 
-                        // 清除缓存并开始轮询
+                        // Clear cache and start monitoring
                         this.clearCache(this.getCacheKey(url, service));
                         if (response.data.refresh) {
                             this.startPolling(url, service);
                         }
 
-                        // 触发自定义事件
+                        // Trigger custom event
                         $(document).trigger('archiver:snapshot:success', [url, service]);
                     } else {
                         $status.removeClass('success').addClass('error')
-                            .html('<span class="dashicons dashicons-warning"></span> ' + response.data.message);
+                            .html('<span class="dashicons dashicons-warning"></span> ' +
+                                  (response.data?.message || 'Archive request failed'));
                     }
                 },
-                error: () => {
+                error: (xhr, status, error) => {
+                    let errorMsg = archiver.i18n.error;
+                    if (status === 'timeout') {
+                        errorMsg = 'Archive request timeout - please try again';
+                    }
                     $status.removeClass('success').addClass('error')
-                        .html('<span class="dashicons dashicons-warning"></span> ' + archiver.i18n.error);
+                        .html('<span class="dashicons dashicons-warning"></span> ' + errorMsg);
                 },
                 complete: () => {
                     $button.prop('disabled', false).removeClass('updating-message');
                     setTimeout(() => {
                         $status.fadeOut();
-                    }, 5000);
+                    }, 8000);
                 }
             });
         },
 
         /**
-         * 管理栏触发快照
+         * Admin bar snapshot trigger
          */
         triggerAdminBarSnapshot: function() {
             const $item = $('#wp-admin-bar-archiver');
@@ -365,6 +429,7 @@
                     url: archiver.url,
                     service: archiver.primary_service
                 },
+                timeout: 20000,
                 success: (response) => {
                     $item.removeClass('archiver-active');
                     if (response.success) {
@@ -377,20 +442,21 @@
                         this.showNotification(response.message || archiver.i18n.error, 'error');
                     }
                 },
-                error: () => {
+                error: (xhr, status) => {
                     $item.removeClass('archiver-active').addClass('archiver-failure');
-                    this.showNotification(archiver.i18n.error, 'error');
+                    const errorMsg = status === 'timeout' ? 'Archive timeout' : archiver.i18n.error;
+                    this.showNotification(errorMsg, 'error');
                 },
                 complete: () => {
                     setTimeout(() => {
                         $item.removeClass('archiver-success archiver-failure');
-                    }, 2000);
+                    }, 3000);
                 }
             });
         },
 
         /**
-         * 更新管理栏计数
+         * Update admin bar count
          */
         updateAdminBarCount: function(url) {
             const $countItem = $('#wp-admin-bar-archiver-snapshots .ab-label');
@@ -405,17 +471,18 @@
                     url: url,
                     service: archiver.primary_service
                 },
+                timeout: 10000,
                 success: (response) => {
                     if (response.success && response.data.count !== undefined) {
                         const count = response.data.count >= 10 ? '10+' : response.data.count;
-                        $countItem.text(archiver.i18n.view_all + ' (' + count + ')');
+                        $countItem.text(`${archiver.i18n.view_all} (${count})`);
                     }
                 }
             });
         },
 
         /**
-         * 检查更新
+         * Check for updates
          */
         checkForUpdates: function(url, $container, service = null) {
             $.ajax({
@@ -427,6 +494,7 @@
                     url: url,
                     service: service
                 },
+                timeout: 8000,
                 success: (response) => {
                     if (response.success && response.data.has_update) {
                         const cacheKey = this.getCacheKey(url, service);
@@ -438,7 +506,7 @@
         },
 
         /**
-         * 开始轮询
+         * Start polling for updates
          */
         startPolling: function(url, service = null) {
             let checkCount = 0;
@@ -454,10 +522,20 @@
 
                 this.checkForUpdates(url, $container, service);
             }, this.config.checkInterval);
+
+            // Visual indicator for polling
+            if ($container.length) {
+                const $indicator = $('<div class="archiver-polling-indicator">Checking for new archives...</div>');
+                $container.prepend($indicator);
+
+                setTimeout(() => {
+                    $indicator.fadeOut(() => $indicator.remove());
+                }, this.config.checkInterval * 3);
+            }
         },
 
         /**
-         * 显示加载状态
+         * Show loading state
          */
         showLoading: function($container) {
             const loadingHtml = `
@@ -470,30 +548,61 @@
         },
 
         /**
-         * 显示错误
+         * Show error state
          */
         showError: function($container, message) {
-            $container.html('<p class="archiver-error">' + message + '</p>');
+            const errorHtml = `
+                <div class="archiver-error">
+                    <p><span class="dashicons dashicons-warning"></span> ${message}</p>
+                    <button class="button button-small archiver-retry">Try Again</button>
+                </div>
+            `;
+            $container.html(errorHtml);
+
+            // Retry functionality
+            $container.find('.archiver-retry').on('click', () => {
+                const url = $container.data('url');
+                const service = $container.data('service');
+                this.loadSnapshots(url, $container, service);
+            });
         },
 
         /**
-         * 显示通知
+         * Show notification
          */
         showNotification: function(message, type = 'info') {
-            // 如果在管理页面，使用 WordPress 通知
+            // If in admin page, use WordPress notifications
             if ($('body').hasClass('wp-admin')) {
-                const $notice = $('<div class="notice notice-' + type + ' is-dismissible"><p>' + message + '</p></div>');
+                const $notice = $(`<div class="notice notice-${type} is-dismissible"><p>${message}</p></div>`);
                 $('.wrap > h1').after($notice);
 
-                // 自动关闭
+                // Auto dismiss
                 setTimeout(() => {
                     $notice.fadeOut(() => $notice.remove());
                 }, 5000);
+            } else {
+                // Frontend notification
+                const $notification = $(`
+                    <div class="archiver-notification archiver-notification-${type}">
+                        ${message}
+                    </div>
+                `);
+
+                $('body').append($notification);
+
+                setTimeout(() => {
+                    $notification.addClass('show');
+                }, 100);
+
+                setTimeout(() => {
+                    $notification.removeClass('show');
+                    setTimeout(() => $notification.remove(), 300);
+                }, 4000);
             }
         },
 
         /**
-         * 缓存管理
+         * Cache management
          */
         getCacheKey: function(url, service = null) {
             const serviceKey = service || 'default';
@@ -508,13 +617,22 @@
 
                 if (cached) {
                     const data = JSON.parse(cached);
-                    // 5分钟缓存
+                    // 5 minute cache
                     if (Date.now() - data.timestamp < 300000) {
                         return data.content;
+                    } else {
+                        // Clean expired cache
+                        sessionStorage.removeItem(key);
                     }
                 }
             } catch (e) {
-                console.warn('Cache read error:', e);
+                console.warn('Archiver cache read error:', e);
+                // Clean corrupted cache
+                try {
+                    sessionStorage.removeItem(key);
+                } catch (cleanError) {
+                    console.warn('Failed to clean corrupted cache:', cleanError);
+                }
             }
 
             return null;
@@ -530,7 +648,9 @@
                 };
                 sessionStorage.setItem(key, JSON.stringify(cacheData));
             } catch (e) {
-                console.warn('Cache write error:', e);
+                console.warn('Archiver cache write error:', e);
+                // Try to clear some space
+                this.cleanOldCache();
             }
         },
 
@@ -541,23 +661,157 @@
                 if (key) {
                     sessionStorage.removeItem(key);
                 } else {
-                    // 清除所有archiver缓存
-                    const keys = [];
-                    for (let i = 0; i < sessionStorage.length; i++) {
-                        const k = sessionStorage.key(i);
-                        if (k && k.startsWith(this.config.cachePrefix)) {
-                            keys.push(k);
-                        }
-                    }
-                    keys.forEach(k => sessionStorage.removeItem(k));
+                    // Clear all archiver cache
+                    this.cleanOldCache(true);
                 }
             } catch (e) {
-                console.warn('Cache clear error:', e);
+                console.warn('Archiver cache clear error:', e);
+            }
+        },
+
+        cleanOldCache: function(clearAll = false) {
+            if (!this.isStorageAvailable()) return;
+
+            try {
+                const keys = [];
+                const now = Date.now();
+
+                for (let i = 0; i < sessionStorage.length; i++) {
+                    const key = sessionStorage.key(i);
+                    if (key && key.startsWith(this.config.cachePrefix)) {
+                        if (clearAll) {
+                            keys.push(key);
+                        } else {
+                            try {
+                                const cached = sessionStorage.getItem(key);
+                                if (cached) {
+                                    const data = JSON.parse(cached);
+                                    // Remove if older than 10 minutes
+                                    if (now - data.timestamp > 600000) {
+                                        keys.push(key);
+                                    }
+                                }
+                            } catch (e) {
+                                // Remove corrupted entries
+                                keys.push(key);
+                            }
+                        }
+                    }
+                }
+
+                keys.forEach(key => {
+                    try {
+                        sessionStorage.removeItem(key);
+                    } catch (e) {
+                        console.warn('Failed to remove cache key:', key, e);
+                    }
+                });
+
+                if (keys.length > 0) {
+                    console.log(`Archiver: Cleaned ${keys.length} cache entries`);
+                }
+            } catch (e) {
+                console.warn('Cache cleanup error:', e);
             }
         },
 
         /**
-         * 工具函数
+         * Add notification styles
+         */
+        addNotificationStyles: function() {
+            if ($('#archiver-notification-styles').length) return;
+
+            $('head').append(`
+                <style id="archiver-notification-styles">
+                .archiver-notification {
+                    position: fixed;
+                    top: 32px;
+                    right: 20px;
+                    background: #fff;
+                    border-left: 4px solid #00a0d2;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                    padding: 12px 16px;
+                    border-radius: 3px;
+                    z-index: 999999;
+                    transform: translateX(100%);
+                    transition: transform 0.3s ease;
+                    max-width: 350px;
+                    word-wrap: break-word;
+                    font-size: 13px;
+                }
+
+                .archiver-notification.show {
+                    transform: translateX(0);
+                }
+
+                .archiver-notification-success {
+                    border-left-color: #46b450;
+                }
+
+                .archiver-notification-error {
+                    border-left-color: #dc3232;
+                }
+
+                .archiver-notification-info {
+                    border-left-color: #00a0d2;
+                }
+
+                .archiver-error {
+                    text-align: center;
+                    padding: 20px;
+                    color: #dc3232;
+                }
+
+                .archiver-error .dashicons {
+                    margin-right: 5px;
+                }
+
+                .archiver-retry {
+                    margin-top: 10px;
+                }
+
+                .archiver-polling-indicator {
+                    background: #e7f3ff;
+                    border: 1px solid #b8dcf2;
+                    color: #0073aa;
+                    padding: 8px 12px;
+                    border-radius: 3px;
+                    margin-bottom: 10px;
+                    font-size: 12px;
+                    text-align: center;
+                }
+
+                .archiver-no-snapshots {
+                    text-align: center;
+                    padding: 20px;
+                    color: #646970;
+                }
+
+                .archiver-no-snapshots small {
+                    display: block;
+                    margin-top: 8px;
+                    font-size: 11px;
+                }
+
+                @media (max-width: 782px) {
+                    .archiver-notification {
+                        top: 46px;
+                        right: 10px;
+                        left: 10px;
+                        max-width: none;
+                        transform: translateY(-100%);
+                    }
+
+                    .archiver-notification.show {
+                        transform: translateY(0);
+                    }
+                }
+                </style>
+            `);
+        },
+
+        /**
+         * Utility functions
          */
         isStorageAvailable: function() {
             try {
@@ -581,7 +835,7 @@
         },
 
         /**
-         * 防抖函数
+         * Debounce function
          */
         debounce: function(func, wait) {
             let timeout;
@@ -593,13 +847,44 @@
                 clearTimeout(timeout);
                 timeout = setTimeout(later, wait);
             };
+        },
+
+        /**
+         * Global error handler
+         */
+        handleGlobalError: function(error, context = 'Unknown') {
+            console.error(`Archiver Error [${context}]:`, error);
+
+            if (typeof error === 'object' && error.message) {
+                this.showNotification(`Error in ${context}: ${error.message}`, 'error');
+            }
         }
     };
 
-    // 初始化
+    // Global error handling
+    $(document).ajaxError(function(event, xhr, settings, error) {
+        if (settings.url && settings.url.includes('archiver')) {
+            console.error('Archiver AJAX Error:', {
+                url: settings.url,
+                status: xhr.status,
+                error: error,
+                response: xhr.responseText
+            });
+        }
+    });
+
+    // Initialize when DOM is ready
     Archiver.init();
 
-    // 暴露到全局
+    // Expose to global scope
     window.WPArchiver = Archiver;
+
+    // Cleanup on page unload
+    $(window).on('beforeunload', function() {
+        // Clean old cache entries before leaving
+        if (Archiver.isStorageAvailable()) {
+            Archiver.cleanOldCache();
+        }
+    });
 
 })(jQuery);

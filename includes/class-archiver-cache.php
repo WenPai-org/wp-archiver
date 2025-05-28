@@ -1,6 +1,6 @@
 <?php
 /**
- * WP Archiver 缓存管理系统
+ * WP Archiver Cache Management System - Fixed Version
  */
 
 if (!defined('ABSPATH')) {
@@ -17,35 +17,69 @@ class Archiver_Cache {
         'frozen' => MONTH_IN_SECONDS
     ];
 
-    // 添加服务特定的缓存前缀
+    // Service-specific cache prefix
     private $cache_prefix = 'archiver_';
 
-    // 批处理优化
-    private $batch_size = 3;
+    // Batch processing optimization
+    private $batch_size = 10;
     private $max_retries = 3;
 
     public function __construct() {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'archiver_cache';
-        $this->batch_size = apply_filters('archiver_batch_size', 3);
+        $this->batch_size = get_option('archiver_batch_size', 10);
     }
 
     /**
-     * 获取快照数据（支持多服务）
+     * Get available services with fallback
+     */
+    private function get_available_services() {
+        if (defined('ARCHIVER_SERVICES') && is_array(ARCHIVER_SERVICES)) {
+            return ARCHIVER_SERVICES;
+        }
+
+        // Fallback services if constant is not defined
+        return array(
+            'wenpai' => array(
+                'name' => 'WenPai Archive',
+                'save_url' => 'https://web.wenpai.net/save/',
+                'fetch_url' => 'https://web.wenpai.net/cdx/',
+                'view_url' => 'https://web.wenpai.net/web/',
+                'enabled' => true
+            ),
+            'wayback' => array(
+                'name' => 'Internet Archive',
+                'save_url' => 'https://web.archive.org/save/',
+                'fetch_url' => 'https://web.archive.org/cdx/search/cdx',
+                'view_url' => 'https://web.archive.org/web/',
+                'enabled' => true
+            ),
+            'archive_today' => array(
+                'name' => 'Archive.today',
+                'save_url' => 'https://archive.today/?run=1&url=',
+                'fetch_url' => 'https://archive.today/',
+                'view_url' => 'https://archive.today/',
+                'enabled' => false
+            )
+        );
+    }
+
+    /**
+     * Get snapshot data (supports multiple services)
      */
     public function get_snapshots($url, $service = null, $force_refresh = false) {
         if (!get_option('archiver_cache_enabled', true)) {
             return $this->fetch_from_archive_service($url, $service);
         }
 
-        // 如果没有指定服务，使用主服务
+        // If no service specified, use primary service
         if (!$service) {
             $service = get_option('archiver_primary_service', 'wenpai');
         }
 
         $url_hash = md5($url . '_' . $service);
 
-        // 1. 检查内存缓存
+        // 1. Check memory cache
         if (!$force_refresh) {
             $memory_key = $this->cache_prefix . 'snap_' . $url_hash;
             $cached_data = wp_cache_get($memory_key, 'archiver');
@@ -56,24 +90,25 @@ class Archiver_Cache {
             }
         }
 
-        // 2. 检查数据库缓存
+        // 2. Check database cache
         if (!$force_refresh) {
             $db_cache = $this->get_from_database($url_hash, $service);
             if ($db_cache !== false) {
+                $memory_key = $this->cache_prefix . 'snap_' . $url_hash;
                 wp_cache_set($memory_key, $db_cache, 'archiver', HOUR_IN_SECONDS);
                 return $db_cache;
             }
         }
 
-        // 3. 添加到后台队列（带服务信息）
+        // 3. Add to background queue (with service info)
         $this->queue_for_update($url, $service, false);
 
-        // 4. 返回过期数据或空数组
+        // 4. Return stale data or empty array
         return $this->get_stale_data($url_hash, $service) ?: [];
     }
 
     /**
-     * 从数据库获取缓存
+     * Get cache from database
      */
     private function get_from_database($url_hash, $service = 'wenpai') {
         global $wpdb;
@@ -91,7 +126,7 @@ class Archiver_Cache {
         $this->update_access_stats($url_hash, $service);
         $data = maybe_unserialize($row->snapshot_data);
 
-        // 根据访问频率提升缓存级别
+        // Promote cache level based on access frequency
         if ($row->api_calls_saved > 10 && $row->cache_type !== 'hot') {
             $this->promote_cache($url_hash, $service, 'hot');
         }
@@ -100,7 +135,7 @@ class Archiver_Cache {
     }
 
     /**
-     * 获取过期数据
+     * Get stale data
      */
     private function get_stale_data($url_hash, $service = 'wenpai') {
         global $wpdb;
@@ -117,7 +152,7 @@ class Archiver_Cache {
     }
 
     /**
-     * 保存快照数据
+     * Save snapshot data
      */
     public function save_snapshots($url, $snapshots, $service = 'wenpai') {
         global $wpdb;
@@ -140,23 +175,25 @@ class Archiver_Cache {
             'status' => 'active'
         ];
 
-        $wpdb->replace($this->table_name, $data);
+        $result = $wpdb->replace($this->table_name, $data);
 
-        // 更新内存缓存
-        $memory_key = $this->cache_prefix . 'snap_' . $url_hash;
-        wp_cache_set($memory_key, $snapshots, 'archiver', HOUR_IN_SECONDS);
+        if ($result !== false) {
+            // Update memory cache
+            $memory_key = $this->cache_prefix . 'snap_' . $url_hash;
+            wp_cache_set($memory_key, $snapshots, 'archiver', HOUR_IN_SECONDS);
 
-        // 更新统计
-        $this->increment_archived_count();
+            // Update statistics
+            $this->increment_archived_count();
+        }
 
-        return true;
+        return $result !== false;
     }
 
     /**
-     * 确定缓存类型
+     * Determine cache type
      */
     private function determine_cache_type($url) {
-        // 首页：热数据
+        // Homepage: hot data
         if ($url === home_url() || $url === home_url('/')) {
             return 'hot';
         }
@@ -177,12 +214,12 @@ class Archiver_Cache {
     }
 
     /**
-     * 添加到更新队列（支持多服务）
+     * Add to update queue (supports multiple services)
      */
     public function queue_for_update($url, $service = null, $priority = false) {
         $queue = get_option('archiver_background_queue', []);
 
-        // 如果没有指定服务，使用所有启用的服务
+        // If no service specified, use all enabled services
         if (!$service) {
             $enabled_services = get_option('archiver_services', array('wenpai' => true));
             foreach ($enabled_services as $service_id => $enabled) {
@@ -194,25 +231,25 @@ class Archiver_Cache {
             $this->add_to_queue($queue, $url, $service, $priority);
         }
 
-        // 限制队列大小
-        $max_queue_size = apply_filters('archiver_queue_limit', 100);
+        // Limit queue size
+        $max_queue_size = get_option('archiver_max_queue_size', 500);
         $queue = array_slice($queue, 0, $max_queue_size);
 
         update_option('archiver_background_queue', $queue);
 
-        // 触发后台处理
+        // Trigger background processing
         if (!wp_next_scheduled('archiver_process_background_queue')) {
             wp_schedule_single_event(time() + 10, 'archiver_process_background_queue');
         }
     }
 
     /**
-     * 添加单个项目到队列
+     * Add single item to queue
      */
     private function add_to_queue(&$queue, $url, $service, $priority) {
         $item = array('url' => $url, 'service' => $service, 'retries' => 0);
 
-        // 检查是否已存在
+        // Check if already exists
         foreach ($queue as $existing) {
             if (is_array($existing) && $existing['url'] === $url && $existing['service'] === $service) {
                 return;
@@ -227,7 +264,7 @@ class Archiver_Cache {
     }
 
     /**
-     * 处理后台队列
+     * Process background queue
      */
     public function process_background_queue() {
         $queue = get_option('archiver_background_queue', []);
@@ -236,13 +273,13 @@ class Archiver_Cache {
             return;
         }
 
-        // 每次处理批量URL
+        // Process batch URLs each time
         $batch = array_splice($queue, 0, $this->batch_size);
         $failed_items = array();
 
         foreach ($batch as $item) {
             if (!is_array($item)) {
-                // 兼容旧格式
+                // Compatible with old format
                 $item = array('url' => $item, 'service' => 'wenpai', 'retries' => 0);
             }
 
@@ -258,20 +295,20 @@ class Archiver_Cache {
             }
         }
 
-        // 将失败的项目重新加入队列末尾
+        // Re-add failed items to end of queue
         $queue = array_merge($queue, $failed_items);
 
-        // 更新队列
+        // Update queue
         update_option('archiver_background_queue', $queue);
 
-        // 如果还有待处理项，继续安排
+        // Continue scheduling if more items pending
         if (!empty($queue)) {
             wp_schedule_single_event(time() + 30, 'archiver_process_background_queue');
         }
     }
 
     /**
-     * 从存档服务获取并缓存数据
+     * Fetch and cache snapshots from archive service
      */
     public function fetch_and_cache_snapshots($url, $service = 'wenpai') {
         $snapshots = $this->fetch_from_archive_service($url, $service);
@@ -285,14 +322,14 @@ class Archiver_Cache {
     }
 
     /**
-     * 从存档服务获取数据
+     * Fetch data from archive service
      */
     private function fetch_from_archive_service($url, $service = null) {
         if (!$service) {
             $service = get_option('archiver_primary_service', 'wenpai');
         }
 
-        $services = ARCHIVER_SERVICES;
+        $services = $this->get_available_services();
         if (!isset($services[$service])) {
             return false;
         }
@@ -313,114 +350,187 @@ class Archiver_Cache {
     }
 
     /**
-     * 从 Wayback Machine 获取数据
+     * Fetch data from Wayback Machine
      */
     private function fetch_from_wayback($url) {
+        $services = $this->get_available_services();
+
         $api_url = add_query_arg([
             'url' => $url,
             'output' => 'json',
-            'limit' => 10
-        ], ARCHIVER_SERVICES['wayback']['fetch_url']);
+            'limit' => 20,
+            'fl' => 'timestamp,original,statuscode,mimetype,length'
+        ], $services['wayback']['fetch_url']);
 
         $response = wp_remote_get($api_url, [
             'timeout' => 30,
             'sslverify' => true,
             'headers' => [
-                'User-Agent' => 'WP-Archiver/' . ARCHIVER_VERSION
+                'User-Agent' => 'WP-Archiver/' . ARCHIVER_VERSION . ' (WordPress/' . get_bloginfo('version') . ')'
             ]
         ]);
 
         if (is_wp_error($response)) {
+            if (function_exists('archiver_handle_error')) {
+                archiver_handle_error('Wayback API error: ' . $response->get_error_message());
+            }
             return false;
         }
 
-        if (wp_remote_retrieve_response_code($response) !== 200) {
+        $response_code = wp_remote_retrieve_response_code($response);
+        if ($response_code !== 200) {
+            if (function_exists('archiver_handle_error')) {
+                archiver_handle_error('Wayback API returned status: ' . $response_code);
+            }
             return false;
         }
 
         $body = wp_remote_retrieve_body($response);
+        if (empty($body)) {
+            return false;
+        }
+
         $data = json_decode($body, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            if (function_exists('archiver_handle_error')) {
+                archiver_handle_error('Wayback API JSON decode error: ' . json_last_error_msg());
+            }
+            return false;
+        }
 
         if (empty($data) || !is_array($data)) {
-            return false;
+            return array(); // Return empty array instead of false
         }
 
         return $this->process_wayback_response($data);
     }
 
     /**
-     * 从 WenPai Archive 获取数据
+     * Fetch data from WenPai Archive
      */
     private function fetch_from_wenpai($url) {
+        $services = $this->get_available_services();
+
         $api_url = add_query_arg([
             'url' => $url,
             'output' => 'json',
-        ], ARCHIVER_SERVICES['wenpai']['fetch_url']);
+            'limit' => 20,
+            'fl' => 'timestamp,original,statuscode'
+        ], $services['wenpai']['fetch_url']);
 
         $response = wp_remote_get($api_url, [
             'timeout' => 30,
-            'sslverify' => false, // WenPai 可能使用自签名证书
+            'sslverify' => false, // WenPai might use self-signed certificate
             'headers' => [
-                'User-Agent' => 'WP-Archiver/' . ARCHIVER_VERSION
+                'User-Agent' => 'WP-Archiver/' . ARCHIVER_VERSION . ' (WordPress/' . get_bloginfo('version') . ')'
             ]
         ]);
 
         if (is_wp_error($response)) {
+            if (function_exists('archiver_handle_error')) {
+                archiver_handle_error('WenPai API error: ' . $response->get_error_message());
+            }
             return false;
         }
 
-        if (wp_remote_retrieve_response_code($response) !== 200) {
+        $response_code = wp_remote_retrieve_response_code($response);
+        if ($response_code !== 200) {
+            if (function_exists('archiver_handle_error')) {
+                archiver_handle_error('WenPai API returned status: ' . $response_code);
+            }
             return false;
         }
 
         $body = wp_remote_retrieve_body($response);
-        $data = json_decode($body, true);
-
-        if (empty($data) || !is_array($data)) {
-            return false;
+        if (empty($body)) {
+            return array(); // Return empty array instead of false
         }
 
-        return $this->process_wayback_response($data); // 使用相同的处理方法
+        $data = json_decode($body, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            // Try to parse as plain text (CDX format)
+            return $this->parse_cdx_response($body);
+        }
+
+        if (empty($data) || !is_array($data)) {
+            return array();
+        }
+
+        return $this->process_wayback_response($data); // Use same processing method
     }
 
     /**
-     * 处理 Wayback Machine 响应
+     * Parse CDX format response
+     */
+    private function parse_cdx_response($body) {
+        $lines = explode("\n", trim($body));
+        if (empty($lines)) {
+            return array();
+        }
+
+        $snapshots = array();
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if (empty($line)) continue;
+
+            $parts = preg_split('/\s+/', $line);
+            if (count($parts) >= 3) {
+                $snapshots[] = array(
+                    'timestamp' => $parts[1],
+                    'original' => $parts[2],
+                    'statuscode' => isset($parts[4]) ? $parts[4] : '200'
+                );
+            }
+        }
+
+        return array_reverse(array_slice($snapshots, -20)); // Return latest 20
+    }
+
+    /**
+     * Process Wayback Machine response
      */
     private function process_wayback_response($data) {
         if (count($data) < 2) {
-            return [];
+            return array();
         }
 
         $headers = array_shift($data);
-        $snapshots = [];
+        $snapshots = array();
 
-        // 只取最新的10条
-        $data = array_slice($data, -10);
+        // Only take latest 20 entries
+        $data = array_slice($data, -20);
 
         foreach ($data as $row) {
-            $snapshot = [];
+            $snapshot = array();
             foreach ($row as $i => $value) {
                 if (isset($headers[$i])) {
                     $snapshot[$headers[$i]] = $value;
                 }
             }
-            $snapshots[] = $snapshot;
+
+            // Filter out failed snapshots
+            if (isset($snapshot['statuscode']) && $snapshot['statuscode'] === '200') {
+                $snapshots[] = $snapshot;
+            } elseif (!isset($snapshot['statuscode'])) {
+                // Include if no status code (assume success)
+                $snapshots[] = $snapshot;
+            }
         }
 
         return array_reverse($snapshots);
     }
 
     /**
-     * 从 Archive.today 获取数据
+     * Fetch data from Archive.today
      */
     private function fetch_from_archive_today($url) {
-        // Archive.today 没有官方 API，返回空数组
-        // 但仍可以触发保存
+        // Archive.today doesn't have official API, return empty array
+        // But can still trigger save
         return array();
     }
 
     /**
-     * 更新访问统计
+     * Update access statistics
      */
     private function update_access_stats($url_hash, $service = 'wenpai') {
         global $wpdb;
@@ -435,7 +545,7 @@ class Archiver_Cache {
     }
 
     /**
-     * 提升缓存级别
+     * Promote cache level
      */
     private function promote_cache($url_hash, $service, $new_type) {
         global $wpdb;
@@ -454,12 +564,12 @@ class Archiver_Cache {
     }
 
     /**
-     * 清理过期缓存
+     * Clean expired cache
      */
     public function cleanup_expired_cache() {
         global $wpdb;
 
-        // 保留最近30天的数据，即使已过期
+        // Keep data from last 30 days, even if expired
         $cutoff_date = date('Y-m-d H:i:s', time() - (30 * DAY_IN_SECONDS));
 
         $deleted = $wpdb->query($wpdb->prepare(
@@ -468,14 +578,14 @@ class Archiver_Cache {
             current_time('mysql'), $cutoff_date
         ));
 
-        // 清理孤立的内存缓存
+        // Clean orphaned memory cache
         wp_cache_flush_group('archiver');
 
         return $deleted;
     }
 
     /**
-     * 获取缓存统计
+     * Get cache statistics
      */
     public function get_cache_stats() {
         global $wpdb;
@@ -483,7 +593,7 @@ class Archiver_Cache {
         $stats = $wpdb->get_row(
             "SELECT
                 COUNT(*) as total_entries,
-                SUM(api_calls_saved) as total_api_saves,
+                SUM(CASE WHEN api_calls_saved IS NOT NULL THEN api_calls_saved ELSE 0 END) as total_api_saves,
                 SUM(CASE WHEN cache_type = 'hot' THEN 1 ELSE 0 END) as hot_entries,
                 SUM(CASE WHEN cache_type = 'warm' THEN 1 ELSE 0 END) as warm_entries,
                 SUM(CASE WHEN cache_type = 'cold' THEN 1 ELSE 0 END) as cold_entries,
@@ -493,10 +603,10 @@ class Archiver_Cache {
             WHERE status = 'active'"
         );
 
-        // 添加服务级别的统计
+        // Add service-level statistics
         if ($stats) {
             $stats->service_stats = $wpdb->get_results(
-                "SELECT service, COUNT(*) as count, SUM(api_calls_saved) as saves
+                "SELECT service, COUNT(*) as count, SUM(CASE WHEN api_calls_saved IS NOT NULL THEN api_calls_saved ELSE 0 END) as saves
                 FROM {$this->table_name}
                 WHERE status = 'active'
                 GROUP BY service"
@@ -507,7 +617,7 @@ class Archiver_Cache {
     }
 
     /**
-     * 预热缓存
+     * Preheat cache
      */
     public function preheat_cache($post_types = null) {
         if (!$post_types) {
@@ -531,10 +641,12 @@ class Archiver_Cache {
 
         foreach ($posts as $post_id) {
             $url = get_permalink($post_id);
-            foreach ($enabled_services as $service_id => $enabled) {
-                if ($enabled) {
-                    $this->queue_for_update($url, $service_id);
-                    $count++;
+            if ($url) {
+                foreach ($enabled_services as $service_id => $enabled) {
+                    if ($enabled) {
+                        $this->queue_for_update($url, $service_id);
+                        $count++;
+                    }
                 }
             }
         }
@@ -543,7 +655,7 @@ class Archiver_Cache {
     }
 
     /**
-     * 获取缓存大小
+     * Get cache size
      */
     public function get_cache_size() {
         global $wpdb;
@@ -559,20 +671,20 @@ class Archiver_Cache {
     }
 
     /**
-     * 优化缓存表
+     * Optimize cache table
      */
     public function optimize_cache_table() {
         global $wpdb;
 
-        // 优化表
+        // Optimize table
         $wpdb->query("OPTIMIZE TABLE {$this->table_name}");
 
-        // 更新统计信息
+        // Update statistics
         $wpdb->query("ANALYZE TABLE {$this->table_name}");
     }
 
     /**
-     * 增加存档计数
+     * Increment archived count
      */
     private function increment_archived_count() {
         $count = get_option('archiver_total_archived', 0);
@@ -580,7 +692,7 @@ class Archiver_Cache {
     }
 
     /**
-     * 增加失败计数
+     * Increment failed count
      */
     private function increment_failed_count() {
         $count = get_option('archiver_failed_snapshots', 0);
@@ -588,7 +700,7 @@ class Archiver_Cache {
     }
 
     /**
-     * 获取服务健康状态
+     * Get service health status
      */
     public function get_service_health($service = null) {
         global $wpdb;
@@ -599,7 +711,7 @@ class Archiver_Cache {
             "SELECT
                 COUNT(*) as total_attempts,
                 SUM(CASE WHEN snapshot_count > 0 THEN 1 ELSE 0 END) as successful,
-                AVG(api_calls_saved) as avg_saves
+                AVG(CASE WHEN api_calls_saved IS NOT NULL THEN api_calls_saved ELSE 0 END) as avg_saves
             FROM {$this->table_name}
             WHERE created_at > DATE_SUB(NOW(), INTERVAL 7 DAY)" . $where
         );
@@ -612,17 +724,19 @@ class Archiver_Cache {
     }
 }
 
-// 注册清理任务
+// Register cleanup task
 add_action('archiver_cleanup_cache', function() {
-    $cache = new Archiver_Cache();
-    $cleaned = $cache->cleanup_expired_cache();
+    if (class_exists('Archiver_Cache')) {
+        $cache = new Archiver_Cache();
+        $cleaned = $cache->cleanup_expired_cache();
 
-    if ($cleaned > 0) {
-        error_log('[WP Archiver] Cleaned ' . $cleaned . ' expired cache entries');
-    }
+        if ($cleaned > 0 && defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[WP Archiver] Cleaned ' . $cleaned . ' expired cache entries');
+        }
 
-    // 每周优化一次表
-    if (date('w') == 0) { // 周日
-        $cache->optimize_cache_table();
+        // Optimize table once a week
+        if (date('w') == 0) { // Sunday
+            $cache->optimize_cache_table();
+        }
     }
 });

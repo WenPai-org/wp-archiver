@@ -16,13 +16,13 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// 定义常量
+// Define constants
 define('ARCHIVER_VERSION', '2.0.0');
 define('ARCHIVER_PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('ARCHIVER_PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 define('ARCHIVER_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
-// 定义存档服务 - 修复原始的 wenpai.net 服务
+// Define archive services
 define('ARCHIVER_SERVICES', array(
     'wayback' => array(
         'name' => 'Internet Archive',
@@ -47,10 +47,10 @@ define('ARCHIVER_SERVICES', array(
     )
 ));
 
-// 插件激活
+// Plugin activation
 register_activation_hook(__FILE__, 'archiver_activate');
 function archiver_activate() {
-    // 设置默认选项
+    // Set default options
     add_option('archiver_post_types', array('post', 'page'));
     add_option('archiver_update_frequency', 'daily');
     add_option('archiver_urls_to_update', array());
@@ -62,13 +62,13 @@ function archiver_activate() {
     add_option('archiver_primary_service', 'wenpai');
     add_option('archiver_auto_archive', true);
     add_option('archiver_archive_on_publish', true);
-    add_option('archiver_max_queue_size', 100);
-    add_option('archiver_batch_size', 3);
+    add_option('archiver_max_queue_size', 500); // Increased default
+    add_option('archiver_batch_size', 10); // Increased default
 
-    // 创建缓存表
+    // Create cache table
     archiver_create_cache_table();
 
-    // 安排定时任务
+    // Schedule cron tasks
     if (!wp_next_scheduled('archiver_process_urls')) {
         wp_schedule_event(time(), 'daily', 'archiver_process_urls');
     }
@@ -77,11 +77,11 @@ function archiver_activate() {
         wp_schedule_event(time(), 'daily', 'archiver_cleanup_cache');
     }
 
-    // 清理缓存
+    // Clear cache
     wp_cache_flush();
 }
 
-// 创建缓存表
+// Create cache table
 function archiver_create_cache_table() {
     global $wpdb;
 
@@ -111,14 +111,14 @@ function archiver_create_cache_table() {
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     dbDelta($sql);
 
-    // 添加索引以提高查询性能
+    // Add indexes for better query performance
     $wpdb->query("CREATE INDEX IF NOT EXISTS idx_status_expires ON {$table_name} (status, expires_at)");
 }
 
-// 插件停用
+// Plugin deactivation
 register_deactivation_hook(__FILE__, 'archiver_deactivate');
 function archiver_deactivate() {
-    // 删除定时任务
+    // Remove scheduled tasks
     $timestamp = wp_next_scheduled('archiver_process_urls');
     if ($timestamp) {
         wp_unschedule_event($timestamp, 'archiver_process_urls');
@@ -129,14 +129,14 @@ function archiver_deactivate() {
         wp_unschedule_event($timestamp, 'archiver_cleanup_cache');
     }
 
-    // 清理缓存
+    // Clear cache
     wp_cache_flush();
 }
 
-// 插件卸载
+// Plugin uninstall
 register_uninstall_hook(__FILE__, 'archiver_uninstall');
 function archiver_uninstall() {
-    // 删除选项
+    // Delete options
     $options = array(
         'archiver_post_types',
         'archiver_update_frequency',
@@ -158,45 +158,46 @@ function archiver_uninstall() {
         delete_option($option);
     }
 
-    // 删除缓存表
+    // Delete cache table
     global $wpdb;
     $wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}archiver_cache");
 
-    // 清理所有transients
+    // Clean all transients
     $wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_archiver_%'");
     $wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_archiver_%'");
 }
 
-// 加载文本域
+// Load text domain
 add_action('init', 'archiver_load_textdomain');
 function archiver_load_textdomain() {
     load_plugin_textdomain('archiver', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 }
 
-// 延长 nonce 有效期（仅针对本插件）
+// Extend nonce life (for this plugin only)
 add_filter('nonce_life', function($lifespan) {
     if (isset($_GET['page']) && $_GET['page'] === 'archiver-settings') {
-        return DAY_IN_SECONDS; // 24小时
+        return DAY_IN_SECONDS; // 24 hours
     }
     return $lifespan;
 });
 
-// 错误处理
+// Error handling
 function archiver_handle_error($message, $type = 'error') {
     if (defined('WP_DEBUG') && WP_DEBUG) {
         error_log('[WP Archiver] ' . $type . ': ' . $message);
     }
 }
 
-// 加载类文件 - 注意顺序很重要！
+// Load class files - order is important!
 function archiver_load_dependencies() {
     $includes_dir = ARCHIVER_PLUGIN_DIR_PATH . 'includes/';
 
-    // 按正确顺序加载
+    // Load in correct order
     $files = array(
-        'class-archiver-cache.php',    // 缓存类必须先加载
-        'class-archiver.php',          // 主类
-        'class-archiver-admin.php'     // 管理类最后加载
+        'class-archiver-cache.php',    // Cache class must be loaded first
+        'class-archiver.php',          // Main class
+        'class-archiver-admin.php',    // Admin class loaded last
+        'class-archiver-dashboard.php' // Dashboard widget
     );
 
     foreach ($files as $file) {
@@ -209,23 +210,24 @@ function archiver_load_dependencies() {
     }
 }
 
-// 初始化插件
+// Initialize plugin
 add_action('plugins_loaded', 'archiver_init', 5);
 function archiver_init() {
-    // 加载依赖
+    // Load dependencies
     archiver_load_dependencies();
 
-    // 运行插件
+    // Run plugin
     archiver_run();
 }
 
-// 运行插件主逻辑
+// Run main plugin logic
 function archiver_run() {
     try {
         $archiver = Archiver::get_instance();
 
         if (is_admin()) {
             new Archiver_Admin($archiver);
+            new Archiver_Dashboard($archiver);
         }
 
         $archiver->run();
@@ -237,7 +239,7 @@ function archiver_run() {
     }
 }
 
-// 添加设置链接到插件列表
+// Add settings link to plugin list
 add_filter('plugin_action_links_' . ARCHIVER_PLUGIN_BASENAME, 'archiver_add_action_links');
 function archiver_add_action_links($links) {
     $settings_link = '<a href="' . admin_url('tools.php?page=archiver-settings') . '">' . __('Settings', 'archiver') . '</a>';
@@ -245,7 +247,7 @@ function archiver_add_action_links($links) {
     return $links;
 }
 
-// 检查系统要求
+// Check system requirements
 add_action('admin_init', 'archiver_check_requirements');
 function archiver_check_requirements() {
     if (version_compare(PHP_VERSION, '5.6', '<')) {
@@ -265,16 +267,15 @@ function archiver_check_requirements() {
     }
 }
 
-// 性能优化：限制队列大小
+// Performance optimization: limit queue size
 add_filter('archiver_queue_limit', function($limit) {
-    return get_option('archiver_max_queue_size', 100);
+    return get_option('archiver_max_queue_size', 500);
 });
 
-// 性能优化：批处理大小
+// Performance optimization: batch processing size
 add_filter('archiver_batch_size', function($size) {
-    return get_option('archiver_batch_size', 3);
+    return get_option('archiver_batch_size', 10);
 });
-
 
 // Integrate UpdatePulse Server for updates using PUC v5.3
 require_once plugin_dir_path(__FILE__) . 'lib/plugin-update-checker/plugin-update-checker.php';
