@@ -1417,7 +1417,7 @@ class Archiver_Admin {
 
             add_settings_error('archiver_messages', 'archiver_message', __('All cache cleared successfully.', 'archiver'), 'success');
         } catch (Exception $e) {
-            add_settings_error('archiver_messages', 'archiver_message', __('Error clearing cache: ', 'archiver') . $e->getMessage(), 'error');
+            add_settings_error('archiver_messages', 'archiver_message', __('Error clearing cache:', 'archiver') . ' ' . $e->getMessage(), 'error');
         }
     }
 

@@ -50,7 +50,7 @@ msgid "Deactivation is possible after:"
 msgstr "可以在以下情况后停用："
 
 #: lib/updatepulse-updater/class-updatepulse-updater.php:613
-msgid "Theme License - "
+msgid "Theme License -"
 msgstr "主题许可 -"
 
 #: lib/updatepulse-updater/class-updatepulse-updater.php:866

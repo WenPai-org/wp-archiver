@@ -610,7 +610,7 @@ if ( ! class_exists( __NAMESPACE__ . '\UpdatePulse_Updater' ) ) {
 			}
 
 			$theme = wp_get_theme();
-			$title = __( 'Theme License - ', 'updatepulse-updater' ) . $theme->get( 'Name' );
+			$title = __( 'Theme License -', 'updatepulse-updater' ) . ' ' . $theme->get( 'Name' );
 
 			$this->get_template(
 				'theme-page-license.php',

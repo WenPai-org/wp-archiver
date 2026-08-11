@@ -582,7 +582,7 @@ msgid "All cache cleared successfully."
 msgstr "所有缓存已成功清除。"
 
 #: includes/class-archiver-admin.php:1420
-msgid "Error clearing cache: "
+msgid "Error clearing cache:"
 msgstr "清除缓存时出错："
 
 #: includes/class-archiver-admin.php:1435

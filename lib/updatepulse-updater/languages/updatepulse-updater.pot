@@ -51,7 +51,7 @@ msgid "Deactivation is possible after:"
 msgstr ""
 
 #: lib/updatepulse-updater/class-updatepulse-updater.php:613
-msgid "Theme License - "
+msgid "Theme License -"
 msgstr ""
 
 #: lib/updatepulse-updater/class-updatepulse-updater.php:866
