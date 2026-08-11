@@ -1,0 +1,144 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-archiver\n"
+"POT-Creation-Date: 2026-08-12 00:00+0000\n"
+"PO-Revision-Date: 2026-08-12 00:00+0000\n"
+"Last-Translator: WenPai Localization Team\n"
+"Language-Team: Chinese (China)\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: WenPai deterministic i18n pipeline\n"
+
+#. Plugin Name of the plugin
+#: wp-archiver.php
+msgid "WP Archiver"
+msgstr "WP 存档器"
+
+#. Plugin URI of the plugin
+#: wp-archiver.php
+msgid "http://wenpai.org/plugins/wp-archiver"
+msgstr "http://wenpai.org/plugins/wp-archiver"
+
+#. Description of the plugin
+#: wp-archiver.php
+msgid ""
+"Archive your content using multiple archive services with advanced caching."
+msgstr "使用具有高级缓存的多个存档服务来存档您的内容。"
+
+#. Author of the plugin
+#: wp-archiver.php
+msgid "WenPai.org"
+msgstr "文派网"
+
+#. Author URI of the plugin
+#: wp-archiver.php
+msgid "https://wenpai.org/"
+msgstr "https://wenpai.org/"
+
+#: lib/updatepulse-updater/class-updatepulse-updater.php:380
+#: lib/updatepulse-updater/class-updatepulse-updater.php:970
+msgid "Deactivate"
+msgstr "停用"
+
+#: lib/updatepulse-updater/class-updatepulse-updater.php:387
+#: lib/updatepulse-updater/class-updatepulse-updater.php:967
+msgid "Deactivation is possible after:"
+msgstr "可以在以下情况后停用："
+
+#: lib/updatepulse-updater/class-updatepulse-updater.php:613
+msgid "Theme License - "
+msgstr "主题许可 -"
+
+#: lib/updatepulse-updater/class-updatepulse-updater.php:866
+msgid ""
+"Unexpected Error! The query to retrieve the license data returned a "
+"malformed response."
+msgstr "意外错误！检索许可证数据的查询返回了格式错误的响应。"
+
+#: lib/updatepulse-updater/class-updatepulse-updater.php:886
+msgid "The license is already in use for this domain."
+msgstr "该许可证已用于该域。"
+
+#: lib/updatepulse-updater/class-updatepulse-updater.php:891
+msgid ""
+"The license has reached the maximum number of activations and cannot be "
+"activated for this domain."
+msgstr "许可证已达到最大激活次数，无法为此域激活。"
+
+#: lib/updatepulse-updater/class-updatepulse-updater.php:896
+msgid "The license is already inactive for this domain."
+msgstr "该域的许可证已处于非活动状态。"
+
+#: lib/updatepulse-updater/class-updatepulse-updater.php:900
+msgid "The license may not be deactivated yet."
+msgstr "该许可证可能尚未停用。"
+
+#: lib/updatepulse-updater/class-updatepulse-updater.php:907
+msgid ""
+"The license is blocked and cannot be updated anymore. Please use another "
+"license key."
+msgstr "许可证已被锁定，无法再更新。请使用另一个许可证密钥。"
+
+#: lib/updatepulse-updater/class-updatepulse-updater.php:910
+msgid ""
+"The license has not been activated and its status is still pending. Please "
+"try again or use another license key."
+msgstr "许可证尚未激活，其状态仍处于待定状态。请重试或使用其他许可证密钥。"
+
+#: lib/updatepulse-updater/class-updatepulse-updater.php:913
+msgid "The provided license key is invalid. Please use another license key."
+msgstr "提供的许可证密钥无效。请使用另一个许可证密钥。"
+
+#. translators: the license expiry date
+#: lib/updatepulse-updater/class-updatepulse-updater.php:923
+#, php-format
+msgid "The license expired on %s and needs to be renewed to be updated."
+msgstr "%s的License已过期，需要续订才能更新。"
+
+#: lib/updatepulse-updater/class-updatepulse-updater.php:927
+msgid "The license expired and needs to be renewed to be updated."
+msgstr "许可证已过期，需要续订才能更新。"
+
+#: lib/updatepulse-updater/class-updatepulse-updater.php:934
+msgid ""
+"The provided license key does not appear to be valid. Please use another "
+"license key."
+msgstr "提供的许可证密钥似乎无效。请使用另一个许可证密钥。"
+
+#: lib/updatepulse-updater/class-updatepulse-updater.php:939
+msgid ""
+"An active license is required to update the plugin. Please provide a valid "
+"license key in Plugins > Installed Plugins."
+msgstr "更新插件需要有效许可证。请在插件 > 已安装的插件中​​提供有效的许可证密钥。"
+
+#: lib/updatepulse-updater/class-updatepulse-updater.php:941
+msgid ""
+"An active license is required to update the theme. Please provide a valid "
+"license key in Appearence > Theme License."
+msgstr "更新主题需要有效许可证。请在外观 > 主题许可证中提供有效的许可证密钥。"
+
+#: lib/updatepulse-updater/class-updatepulse-updater.php:946
+msgid "An unexpected error has occured."
+msgstr "发生意外错误。"
+
+#: lib/updatepulse-updater/class-updatepulse-updater.php:952
+msgid ""
+"An unexpected error has occured. Please try again. If the problem persists, "
+"please contact support."
+msgstr "发生意外错误。请再试一次。如果问题仍然存在，请联系支持人员。"
+
+#: lib/updatepulse-updater/templates/license-form.php:6
+msgid "Current license key:"
+msgstr "当前许可证密钥："
+
+#: lib/updatepulse-updater/templates/license-form.php:9
+msgid "License key:"
+msgstr "许可证密钥："
+
+#: lib/updatepulse-updater/templates/license-form.php:11
+msgid "Activate"
+msgstr "激活"

@@ -1,89 +1,175 @@
-#, fuzzy
+# Copyright (C) 2026 WenPai.org
+# This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Archiver\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-28 06:23+0000\n"
+"Project-Id-Version: WP Archiver 2.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-archiver\n"
+"POT-Creation-Date: 2026-08-12 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: \n"
-"Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.11; wp-6.7.2\n"
-"X-Domain: archiver"
+"X-Domain: archiver\n"
+"X-Generator: WP-CLI 2.12.0\n"
 
-#: includes/class-archiver-admin.php:393
-msgid "%d in main queue, %d in background queue"
+#. Plugin Name of the plugin
+#: wp-archiver.php
+msgid "WP Archiver"
 msgstr ""
 
-#: includes/class-archiver-admin.php:1270
-msgid "%d posts added to archive queue."
+#. Plugin URI of the plugin
+#: wp-archiver.php
+msgid "http://wenpai.org/plugins/wp-archiver"
 msgstr ""
 
-#: includes/class-archiver-admin.php:1308
-msgid "%d recent posts added to archive queue."
+#. Description of the plugin
+#: wp-archiver.php
+msgid ""
+"Archive your content using multiple archive services with advanced caching."
 msgstr ""
 
-#: includes/class-archiver-admin.php:1341
-msgid "%d recently updated posts added to archive queue."
+#. Author of the plugin
+#: wp-archiver.php
+msgid "WenPai.org"
 msgstr ""
 
-#: includes/class-archiver-admin.php:1458
+#. Author URI of the plugin
+#: wp-archiver.php
+msgid "https://wenpai.org/"
+msgstr ""
+
+#: includes/class-archiver-admin.php:39
+msgid "Archiver Settings"
+msgstr ""
+
+#: includes/class-archiver-admin.php:40 includes/class-archiver.php:27
+#: includes/class-archiver.php:479
+msgid "Archiver"
+msgstr ""
+
+#: includes/class-archiver-admin.php:56
+msgid "Performance Tip:"
+msgstr ""
+
+#: includes/class-archiver-admin.php:57
+msgid "Enable caching to improve performance and reduce API calls."
+msgstr ""
+
+#: includes/class-archiver-admin.php:68
+msgid ""
+"Cache table is missing. Please deactivate and reactivate the plugin to fix "
+"this issue."
+msgstr ""
+
+#: includes/class-archiver-admin.php:75
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: includes/class-archiver-admin.php:94
 #, php-format
-msgid "%s is working correctly"
+msgid "Version: %s"
 msgstr ""
 
-#: includes/class-archiver-dashboard.php:142
-msgid "... and %d more"
+#: includes/class-archiver-admin.php:95
+msgid "Document"
+msgstr ""
+
+#: includes/class-archiver-admin.php:96
+msgid "Support"
+msgstr ""
+
+#: includes/class-archiver-admin.php:103
+msgid "Archive Services"
+msgstr ""
+
+#: includes/class-archiver-admin.php:105
+msgid "Configure which archive services to use for your content."
+msgstr ""
+
+#: includes/class-archiver-admin.php:114
+msgid "Service"
+msgstr ""
+
+#: includes/class-archiver-admin.php:115
+msgid "Status"
+msgstr ""
+
+#: includes/class-archiver-admin.php:116
+msgid "Enabled"
+msgstr ""
+
+#: includes/class-archiver-admin.php:117
+msgid "Primary"
 msgstr ""
 
 #: includes/class-archiver-admin.php:118
 msgid "Actions"
 msgstr ""
 
-#: includes/class-archiver-admin.php:1418
-msgid "All cache cleared successfully."
+#: includes/class-archiver-admin.php:130 includes/class-archiver.php:612
+msgid "Checking..."
 msgstr ""
 
-#: includes/class-archiver-admin.php:972
-msgid "and %d more"
+#: includes/class-archiver-admin.php:153
+msgid "Test Connection"
 msgstr ""
 
-#: includes/class-archiver-admin.php:905
-msgid "API Calls Saved"
+#: includes/class-archiver-admin.php:164
+msgid "Save Services"
 msgstr ""
 
-#: includes/class-archiver-admin.php:232
-msgid "Archive"
+#: includes/class-archiver-admin.php:172
+msgid "General Settings"
+msgstr ""
+
+#: includes/class-archiver-admin.php:174
+msgid "Configure automatic archiving and content types."
+msgstr ""
+
+#: includes/class-archiver-admin.php:178 includes/class-archiver-admin.php:196
+msgid "Queue Management"
+msgstr ""
+
+#: includes/class-archiver-admin.php:181
+msgid "Content Types"
+msgstr ""
+
+#: includes/class-archiver-admin.php:184
+msgid "Automation"
+msgstr ""
+
+#: includes/class-archiver-admin.php:187 includes/class-archiver-admin.php:415
+msgid "Cache Settings"
+msgstr ""
+
+#: includes/class-archiver-admin.php:190
+msgid "Performance"
+msgstr ""
+
+#: includes/class-archiver-admin.php:197
+msgid "View and manage the archive queue."
+msgstr ""
+
+#: includes/class-archiver-admin.php:201
+msgid "Archive Tools"
+msgstr ""
+
+#: includes/class-archiver-admin.php:203
+msgid "Bulk archive operations and manual archiving."
+msgstr ""
+
+#: includes/class-archiver-admin.php:207
+msgid "Bulk Archive"
+msgstr ""
+
+#: includes/class-archiver-admin.php:211
+msgid "Select action..."
 msgstr ""
 
 #: includes/class-archiver-admin.php:212
 msgid "Archive all published posts"
-msgstr ""
-
-#: includes/class-archiver-dashboard.php:320
-msgid "Archive failed"
-msgstr ""
-
-#: includes/class-archiver-dashboard.php:491
-msgid "Archive functionality not available"
-msgstr ""
-
-#: includes/class-archiver-admin.php:302
-msgid "Archive immediately when content is published"
-msgstr ""
-
-#: includes/class-archiver-dashboard.php:110
-#: includes/class-archiver-dashboard.php:327 includes/class-archiver.php:301
-msgid "Archive Now"
-msgstr ""
-
-#: includes/class-archiver-admin.php:292
-msgid "Archive on Publish"
 msgstr ""
 
 #: includes/class-archiver-admin.php:213
@@ -94,193 +180,12 @@ msgstr ""
 msgid "Archive recently updated posts"
 msgstr ""
 
-#: includes/class-archiver-admin.php:103
-msgid "Archive Services"
+#: includes/class-archiver-admin.php:217
+msgid "Execute"
 msgstr ""
 
-#: includes/class-archiver-admin.php:1186
-msgid "Archive services saved successfully."
-msgstr ""
-
-#: includes/class-archiver.php:260
-msgid "Archive Snapshots"
-msgstr ""
-
-#: includes/class-archiver-admin.php:465
-msgid "Archive Statistics"
-msgstr ""
-
-#: includes/class-archiver-dashboard.php:33
-msgid "Archive Status"
-msgstr ""
-
-#: includes/class-archiver-admin.php:201
-msgid "Archive Tools"
-msgstr ""
-
-#. Description of the plugin
-msgid ""
-"Archive your content using multiple archive services with advanced caching."
-msgstr ""
-
-#: includes/class-archiver-admin.php:40 includes/class-archiver.php:27
-#: includes/class-archiver.php:479
-msgid "Archiver"
-msgstr ""
-
-#: includes/class-archiver-admin.php:39
-msgid "Archiver Settings"
-msgstr ""
-
-#: includes/class-archiver.php:212 includes/class-archiver.php:241
-#: includes/class-archiver.php:257
-msgid "Archives"
-msgstr ""
-
-#: includes/class-archiver-admin.php:444
-msgid "Are you sure you want to clear all cache?"
-msgstr ""
-
-#: includes/class-archiver-admin.php:946
-msgid "Are you sure?"
-msgstr ""
-
-#: includes/class-archiver-admin.php:277
-msgid "Automatic Archiving"
-msgstr ""
-
-#: includes/class-archiver-admin.php:184
-msgid "Automation"
-msgstr ""
-
-#: includes/class-archiver-admin.php:271
-msgid "Automation Settings"
-msgstr ""
-
-#: includes/class-archiver-admin.php:1118
-msgid "Automation settings saved successfully."
-msgstr ""
-
-#: includes/class-archiver-admin.php:368
-msgid "Batch Processing Size"
-msgstr ""
-
-#: includes/class-archiver-admin.php:207
-msgid "Bulk Archive"
-msgstr ""
-
-#: includes/class-archiver-admin.php:203
-msgid "Bulk archive operations and manual archiving."
-msgstr ""
-
-#: includes/class-archiver-admin.php:438
-msgid "Cache Actions"
-msgstr ""
-
-#: includes/class-archiver-admin.php:897
-msgid "Cache Performance"
-msgstr ""
-
-#: includes/class-archiver-admin.php:1362
-msgid "Cache preheating started for %d posts."
-msgstr ""
-
-#: includes/class-archiver-admin.php:187 includes/class-archiver-admin.php:415
-msgid "Cache Settings"
-msgstr ""
-
-#: includes/class-archiver-admin.php:1149
-msgid "Cache settings saved successfully."
-msgstr ""
-
-#: includes/class-archiver-admin.php:909
-msgid "Cache Size"
-msgstr ""
-
-#: includes/class-archiver-admin.php:68
-msgid ""
-"Cache table is missing. Please deactivate and reactivate the plugin to fix "
-"this issue."
-msgstr ""
-
-#: includes/class-archiver-admin.php:901
-msgid "Cached URLs"
-msgstr ""
-
-#: includes/class-archiver-admin.php:433
-msgid "Caching reduces API calls and improves page load times"
-msgstr ""
-
-#: includes/class-archiver-admin.php:130 includes/class-archiver.php:612
-msgid "Checking..."
-msgstr ""
-
-#: includes/class-archiver-admin.php:445
-msgid "Clear Cache"
-msgstr ""
-
-#: includes/class-archiver-admin.php:947
-msgid "Clear Queue"
-msgstr ""
-
-#: includes/class-archiver-admin.php:174
-msgid "Configure automatic archiving and content types."
-msgstr ""
-
-#: includes/class-archiver-admin.php:417
-msgid "Configure caching to improve performance."
-msgstr ""
-
-#: includes/class-archiver-admin.php:347
-msgid "Configure queue size and batch processing settings."
-msgstr ""
-
-#: includes/class-archiver-admin.php:105
-msgid "Configure which archive services to use for your content."
-msgstr ""
-
-#: includes/class-archiver.php:616
-msgid "Connection failed"
-msgstr ""
-
-#: includes/class-archiver.php:615
-msgid "Connection successful"
-msgstr ""
-
-#: includes/class-archiver-admin.php:181
-msgid "Content Types"
-msgstr ""
-
-#: includes/class-archiver-admin.php:1090
-msgid "Content types saved successfully."
-msgstr ""
-
-#: includes/class-archiver-admin.php:383
-msgid "Current Queue Status"
-msgstr ""
-
-#: includes/class-archiver-admin.php:323
-msgid "Daily"
-msgstr ""
-
-#: includes/class-archiver-admin.php:95
-msgid "Document"
-msgstr ""
-
-#: includes/class-archiver-admin.php:287
-msgid "Enable automatic archiving of content"
-msgstr ""
-
-#: includes/class-archiver-admin.php:423
-msgid "Enable Cache"
-msgstr ""
-
-#: includes/class-archiver-admin.php:57
-msgid "Enable caching to improve performance and reduce API calls."
-msgstr ""
-
-#: includes/class-archiver-admin.php:116
-msgid "Enabled"
+#: includes/class-archiver-admin.php:223
+msgid "Manual Archive"
 msgstr ""
 
 #: includes/class-archiver-admin.php:229
@@ -288,8 +193,44 @@ msgstr ""
 msgid "Enter URL to archive..."
 msgstr ""
 
-#: includes/class-archiver-admin.php:1420
-msgid "Error clearing cache: "
+#: includes/class-archiver-admin.php:232
+msgid "Archive"
+msgstr ""
+
+#: includes/class-archiver-admin.php:241
+msgid "Post Types to Archive"
+msgstr ""
+
+#: includes/class-archiver-admin.php:242
+msgid "Select which content types should be automatically archived."
+msgstr ""
+
+#: includes/class-archiver-admin.php:263
+msgid "Save Content Types"
+msgstr ""
+
+#: includes/class-archiver-admin.php:271
+msgid "Automation Settings"
+msgstr ""
+
+#: includes/class-archiver-admin.php:277
+msgid "Automatic Archiving"
+msgstr ""
+
+#: includes/class-archiver-admin.php:287
+msgid "Enable automatic archiving of content"
+msgstr ""
+
+#: includes/class-archiver-admin.php:292
+msgid "Archive on Publish"
+msgstr ""
+
+#: includes/class-archiver-admin.php:302
+msgid "Archive immediately when content is published"
+msgstr ""
+
+#: includes/class-archiver-admin.php:307
+msgid "Update Frequency"
 msgstr ""
 
 #: includes/class-archiver-admin.php:311 includes/class-archiver.php:185
@@ -300,80 +241,40 @@ msgstr ""
 msgid "Every 30 Minutes"
 msgstr ""
 
-#: includes/class-archiver.php:197
-msgid "Exactly Every Hour"
-msgstr ""
-
-#: includes/class-archiver-admin.php:217
-msgid "Execute"
-msgstr ""
-
-#: includes/class-archiver-dashboard.php:91
-msgid "Failed"
-msgstr ""
-
-#: includes/class-archiver-admin.php:826
-msgid "Failed Snapshots"
-msgstr ""
-
-#: includes/class-archiver.php:609
-msgid "Failed to trigger snapshot."
-msgstr ""
-
-#: includes/class-archiver-admin.php:172
-msgid "General Settings"
-msgstr ""
-
 #: includes/class-archiver-admin.php:317
 msgid "Hourly"
+msgstr ""
+
+#: includes/class-archiver-admin.php:320
+msgid "Twice Daily"
+msgstr ""
+
+#: includes/class-archiver-admin.php:323
+msgid "Daily"
+msgstr ""
+
+#: includes/class-archiver-admin.php:326
+msgid "Weekly"
 msgstr ""
 
 #: includes/class-archiver-admin.php:330
 msgid "How often should the plugin process pending archives?"
 msgstr ""
 
-#. URI of the plugin
-msgid "http://wenpai.org/plugins/wp-archiver"
+#: includes/class-archiver-admin.php:338
+msgid "Save Automation Settings"
 msgstr ""
 
-#. Author URI of the plugin
-msgid "https://wenpai.org/"
+#: includes/class-archiver-admin.php:346
+msgid "Performance Settings"
 msgstr ""
 
-#: includes/class-archiver-admin.php:1449
-msgid "Invalid service"
+#: includes/class-archiver-admin.php:347
+msgid "Configure queue size and batch processing settings."
 msgstr ""
 
-#: includes/class-archiver.php:316
-msgid "Invalid URL"
-msgstr ""
-
-#: includes/class-archiver.php:355
-msgid "Invalid URL."
-msgstr ""
-
-#: includes/class-archiver-admin.php:830
-msgid "Last Run"
-msgstr ""
-
-#: includes/class-archiver-dashboard.php:97
-msgid "Last Run:"
-msgstr ""
-
-#: includes/class-archiver.php:295 includes/class-archiver.php:606
-msgid "Loading snapshots..."
-msgstr ""
-
-#: includes/class-archiver.php:487
-msgid "Loading..."
-msgstr ""
-
-#: includes/class-archiver-admin.php:223
-msgid "Manual Archive"
-msgstr ""
-
-#: includes/class-archiver-admin.php:1204
-msgid "Manual update function not available."
+#: includes/class-archiver-admin.php:353
+msgid "Maximum Queue Size"
 msgstr ""
 
 #: includes/class-archiver-admin.php:363
@@ -382,47 +283,8 @@ msgid ""
 "more memory."
 msgstr ""
 
-#: includes/class-archiver-admin.php:353
-msgid "Maximum Queue Size"
-msgstr ""
-
-#: includes/class-archiver-admin.php:812
-msgid "Metric"
-msgstr ""
-
-#: includes/class-archiver-admin.php:795
-#: includes/class-archiver-dashboard.php:64
-msgid "Never"
-msgstr ""
-
-#: includes/class-archiver-admin.php:834
-msgid "Next Run"
-msgstr ""
-
-#: includes/class-archiver-dashboard.php:101
-msgid "Next Run:"
-msgstr ""
-
-#: includes/class-archiver.php:610
-msgid "No archives yet."
-msgstr ""
-
-#: includes/class-archiver.php:335
-msgid "No archives yet. A snapshot request has been scheduled."
-msgstr ""
-
-#: includes/class-archiver-admin.php:924
-msgid "No pending URLs in the queue."
-msgstr ""
-
-#: includes/class-archiver-admin.php:847
-#: includes/class-archiver-dashboard.php:413
-msgid "Not available"
-msgstr ""
-
-#: includes/class-archiver-admin.php:804
-#: includes/class-archiver-dashboard.php:75 includes/class-archiver.php:1087
-msgid "Not scheduled"
+#: includes/class-archiver-admin.php:368
+msgid "Batch Processing Size"
 msgstr ""
 
 #: includes/class-archiver-admin.php:378
@@ -431,45 +293,192 @@ msgid ""
 "process faster but use more resources."
 msgstr ""
 
-#: includes/class-archiver.php:614
-msgid "Offline"
+#: includes/class-archiver-admin.php:383
+msgid "Current Queue Status"
 msgstr ""
 
-#: includes/class-archiver-admin.php:695 includes/class-archiver.php:613
-msgid "Online"
+#: includes/class-archiver-admin.php:390
+msgid "URLs pending"
+msgstr ""
+
+#: includes/class-archiver-admin.php:393
+#, php-format
+msgid "%d in main queue, %d in background queue"
+msgstr ""
+
+#: includes/class-archiver-admin.php:397
+msgid "Warning:"
+msgstr ""
+
+#: includes/class-archiver-admin.php:398
+msgid ""
+"Queue is nearly full. Consider increasing the maximum queue size or "
+"processing more URLs per batch."
+msgstr ""
+
+#: includes/class-archiver-admin.php:407
+msgid "Save Performance Settings"
+msgstr ""
+
+#: includes/class-archiver-admin.php:417
+msgid "Configure caching to improve performance."
+msgstr ""
+
+#: includes/class-archiver-admin.php:423
+msgid "Enable Cache"
+msgstr ""
+
+#: includes/class-archiver-admin.php:433
+msgid "Caching reduces API calls and improves page load times"
+msgstr ""
+
+#: includes/class-archiver-admin.php:438
+msgid "Cache Actions"
+msgstr ""
+
+#: includes/class-archiver-admin.php:441
+msgid "Preheat Cache"
+msgstr ""
+
+#: includes/class-archiver-admin.php:444
+msgid "Are you sure you want to clear all cache?"
+msgstr ""
+
+#: includes/class-archiver-admin.php:445
+msgid "Clear Cache"
+msgstr ""
+
+#: includes/class-archiver-admin.php:448
+msgid "Preheat cache for recent posts or clear all cached data."
+msgstr ""
+
+#: includes/class-archiver-admin.php:456
+msgid "Save Cache Settings"
+msgstr ""
+
+#: includes/class-archiver-admin.php:465
+msgid "Archive Statistics"
 msgstr ""
 
 #: includes/class-archiver-admin.php:466
 msgid "Overview of your archive activity and performance."
 msgstr ""
 
-#: includes/class-archiver-dashboard.php:87
-msgid "Pending"
+#: includes/class-archiver-admin.php:695 includes/class-archiver.php:613
+msgid "Online"
+msgstr ""
+
+#: includes/class-archiver-admin.php:708
+msgid "Testing..."
+msgstr ""
+
+#: includes/class-archiver-admin.php:731
+msgid "Test failed"
+msgstr ""
+
+#: includes/class-archiver-admin.php:795
+#: includes/class-archiver-dashboard.php:64
+msgid "Never"
+msgstr ""
+
+#: includes/class-archiver-admin.php:804
+#: includes/class-archiver-dashboard.php:75 includes/class-archiver.php:1087
+msgid "Not scheduled"
+msgstr ""
+
+#: includes/class-archiver-admin.php:812
+msgid "Metric"
+msgstr ""
+
+#: includes/class-archiver-admin.php:813
+msgid "Value"
+msgstr ""
+
+#: includes/class-archiver-admin.php:818
+#: includes/class-archiver-dashboard.php:83
+msgid "Total Archived"
 msgstr ""
 
 #: includes/class-archiver-admin.php:822
 msgid "Pending URLs"
 msgstr ""
 
-#: includes/class-archiver-admin.php:190
-msgid "Performance"
+#: includes/class-archiver-admin.php:826
+msgid "Failed Snapshots"
 msgstr ""
 
-#: includes/class-archiver-admin.php:346
-msgid "Performance Settings"
+#: includes/class-archiver-admin.php:830
+msgid "Last Run"
 msgstr ""
 
-#: includes/class-archiver-admin.php:1137
-msgid "Performance settings saved successfully."
+#: includes/class-archiver-admin.php:834
+msgid "Next Run"
 msgstr ""
 
-#: includes/class-archiver-admin.php:56
-msgid "Performance Tip:"
+#: includes/class-archiver-admin.php:847
+#: includes/class-archiver-dashboard.php:413
+msgid "Not available"
 msgstr ""
 
-#: includes/class-archiver-dashboard.php:461
-#: includes/class-archiver-dashboard.php:502
-msgid "Permission denied"
+#: includes/class-archiver-admin.php:897
+msgid "Cache Performance"
+msgstr ""
+
+#: includes/class-archiver-admin.php:901
+msgid "Cached URLs"
+msgstr ""
+
+#: includes/class-archiver-admin.php:905
+msgid "API Calls Saved"
+msgstr ""
+
+#: includes/class-archiver-admin.php:909
+msgid "Cache Size"
+msgstr ""
+
+#: includes/class-archiver-admin.php:924
+msgid "No pending URLs in the queue."
+msgstr ""
+
+#: includes/class-archiver-admin.php:931
+msgid "Total Pending:"
+msgstr ""
+
+#: includes/class-archiver-admin.php:932
+msgid "URLs"
+msgstr ""
+
+#: includes/class-archiver-admin.php:938
+msgid "Process Queue Now"
+msgstr ""
+
+#: includes/class-archiver-admin.php:946
+msgid "Are you sure?"
+msgstr ""
+
+#: includes/class-archiver-admin.php:947
+msgid "Clear Queue"
+msgstr ""
+
+#: includes/class-archiver-admin.php:963
+msgid "Show queue details"
+msgstr ""
+
+#: includes/class-archiver-admin.php:972
+#, php-format
+msgid "and %d more"
+msgstr ""
+
+#: includes/class-archiver-admin.php:996
+#: includes/class-archiver-admin.php:1005
+#: includes/class-archiver-admin.php:1014
+#: includes/class-archiver-admin.php:1023
+#: includes/class-archiver-admin.php:1032
+#: includes/class-archiver-admin.php:1041
+#: includes/class-archiver-admin.php:1050
+#: includes/class-archiver-admin.php:1060
+#: includes/class-archiver-admin.php:1069 includes/class-archiver.php:344
+msgid "Security check failed."
 msgstr ""
 
 #: includes/class-archiver-admin.php:1078
@@ -485,222 +494,81 @@ msgstr ""
 msgid "Permission denied."
 msgstr ""
 
-#: includes/class-archiver-admin.php:1173
-msgid "Please enable at least one archive service."
-msgstr ""
-
-#: includes/class-archiver-dashboard.php:300
-#: includes/class-archiver-dashboard.php:481
-msgid "Please enter a valid URL"
-msgstr ""
-
-#: includes/class-archiver-admin.php:1381
-msgid "Please enter a valid URL."
-msgstr ""
-
-#: includes/class-archiver-admin.php:1236
-msgid "Please select a valid action."
-msgstr ""
-
 #: includes/class-archiver-admin.php:1085
 msgid "Please select at least one post type."
 msgstr ""
 
-#: includes/class-archiver-admin.php:241
-msgid "Post Types to Archive"
+#: includes/class-archiver-admin.php:1090
+msgid "Content types saved successfully."
 msgstr ""
 
-#: includes/class-archiver-admin.php:441
-msgid "Preheat Cache"
+#: includes/class-archiver-admin.php:1118
+msgid "Automation settings saved successfully."
 msgstr ""
 
-#: includes/class-archiver-admin.php:448
-msgid "Preheat cache for recent posts or clear all cached data."
+#: includes/class-archiver-admin.php:1137
+msgid "Performance settings saved successfully."
 msgstr ""
 
-#: includes/class-archiver-admin.php:117
-msgid "Primary"
-msgstr ""
-
-#: includes/class-archiver-admin.php:1179
-msgid "Primary service must be enabled."
-msgstr ""
-
-#: includes/class-archiver-dashboard.php:351
-msgid "Process failed"
-msgstr ""
-
-#: includes/class-archiver-dashboard.php:115
-#: includes/class-archiver-dashboard.php:358
-msgid "Process Queue"
-msgstr ""
-
-#: includes/class-archiver-admin.php:938
-msgid "Process Queue Now"
-msgstr ""
-
-#: includes/class-archiver-admin.php:1200
-msgid "Processing started for %d URLs."
-msgstr ""
-
-#: includes/class-archiver-dashboard.php:304
-#: includes/class-archiver-dashboard.php:336
-msgid "Processing..."
-msgstr ""
-
-#: includes/class-archiver-admin.php:1232
-msgid "Queue cleared successfully."
-msgstr ""
-
-#: includes/class-archiver-admin.php:398
-msgid ""
-"Queue is nearly full. Consider increasing the maximum queue size or "
-"processing more URLs per batch."
-msgstr ""
-
-#: includes/class-archiver-admin.php:178 includes/class-archiver-admin.php:196
-msgid "Queue Management"
-msgstr ""
-
-#: includes/class-archiver-dashboard.php:472
-msgid "Queue processing not available"
-msgstr ""
-
-#: includes/class-archiver-dashboard.php:127
-msgid "Recent Queue Items"
-msgstr ""
-
-#: includes/class-archiver-dashboard.php:118
-msgid "Refresh Stats"
-msgstr ""
-
-#: includes/class-archiver-dashboard.php:324
-#: includes/class-archiver-dashboard.php:355
-msgid "Request failed"
-msgstr ""
-
-#: includes/class-archiver-admin.php:338
-msgid "Save Automation Settings"
-msgstr ""
-
-#: includes/class-archiver-admin.php:456
-msgid "Save Cache Settings"
-msgstr ""
-
-#: includes/class-archiver-admin.php:263
-msgid "Save Content Types"
-msgstr ""
-
-#: includes/class-archiver-admin.php:407
-msgid "Save Performance Settings"
-msgstr ""
-
-#: includes/class-archiver-admin.php:164
-msgid "Save Services"
-msgstr ""
-
-#: includes/class-archiver-admin.php:996 includes/class-archiver-admin.php:1005
-#: includes/class-archiver-admin.php:1014
-#: includes/class-archiver-admin.php:1023
-#: includes/class-archiver-admin.php:1032
-#: includes/class-archiver-admin.php:1041
-#: includes/class-archiver-admin.php:1050
-#: includes/class-archiver-admin.php:1060
-#: includes/class-archiver-admin.php:1069 includes/class-archiver.php:344
-msgid "Security check failed."
-msgstr ""
-
-#: includes/class-archiver-admin.php:211
-msgid "Select action..."
-msgstr ""
-
-#: includes/class-archiver-admin.php:242
-msgid "Select which content types should be automatically archived."
-msgstr ""
-
-#: includes/class-archiver-admin.php:114
-msgid "Service"
-msgstr ""
-
-#: includes/class-archiver-admin.php:1435
-msgid "Service is operational"
-msgstr ""
-
-#: wp-archiver.php:245
-msgid "Settings"
+#: includes/class-archiver-admin.php:1149
+msgid "Cache settings saved successfully."
 msgstr ""
 
 #: includes/class-archiver-admin.php:1159
 msgid "Settings saved successfully."
 msgstr ""
 
-#: includes/class-archiver-admin.php:963
-msgid "Show queue details"
+#: includes/class-archiver-admin.php:1173
+msgid "Please enable at least one archive service."
 msgstr ""
 
-#: includes/class-archiver.php:709
-msgid "Snapshot request recorded."
+#: includes/class-archiver-admin.php:1179
+msgid "Primary service must be enabled."
 msgstr ""
 
-#: includes/class-archiver.php:384
-msgid "Snapshot request submitted and will be processed shortly."
+#: includes/class-archiver-admin.php:1186
+msgid "Archive services saved successfully."
 msgstr ""
 
-#: includes/class-archiver.php:608
-msgid "Snapshot triggered successfully!"
+#: includes/class-archiver-admin.php:1200
+#, php-format
+msgid "Processing started for %d URLs."
 msgstr ""
 
-#: includes/class-archiver-dashboard.php:469
-msgid "Started processing %d URLs from queue"
+#: includes/class-archiver-admin.php:1204
+msgid "Manual update function not available."
 msgstr ""
 
-#: includes/class-archiver-admin.php:115
-msgid "Status"
+#: includes/class-archiver-admin.php:1232
+msgid "Queue cleared successfully."
 msgstr ""
 
-#: includes/class-archiver-admin.php:96
-msgid "Support"
+#: includes/class-archiver-admin.php:1236
+msgid "Please select a valid action."
 msgstr ""
 
-#: includes/class-archiver-admin.php:153
-msgid "Test Connection"
+#: includes/class-archiver-admin.php:1270
+#, php-format
+msgid "%d posts added to archive queue."
 msgstr ""
 
-#: includes/class-archiver-admin.php:731
-msgid "Test failed"
+#: includes/class-archiver-admin.php:1308
+#, php-format
+msgid "%d recent posts added to archive queue."
 msgstr ""
 
-#: includes/class-archiver-admin.php:708
-msgid "Testing..."
+#: includes/class-archiver-admin.php:1341
+#, php-format
+msgid "%d recently updated posts added to archive queue."
 msgstr ""
 
-#: includes/class-archiver.php:336
-msgid "There are no archives of this URL."
+#: includes/class-archiver-admin.php:1362
+#, php-format
+msgid "Cache preheating started for %d posts."
 msgstr ""
 
-#: includes/class-archiver-admin.php:818
-#: includes/class-archiver-dashboard.php:83
-msgid "Total Archived"
-msgstr ""
-
-#: includes/class-archiver-admin.php:931
-msgid "Total Pending:"
-msgstr ""
-
-#: includes/class-archiver.php:495
-msgid "Trigger Snapshot"
-msgstr ""
-
-#: includes/class-archiver.php:607
-msgid "Triggering snapshot..."
-msgstr ""
-
-#: includes/class-archiver-admin.php:320
-msgid "Twice Daily"
-msgstr ""
-
-#: includes/class-archiver-admin.php:307
-msgid "Update Frequency"
+#: includes/class-archiver-admin.php:1381
+msgid "Please enter a valid URL."
 msgstr ""
 
 #: includes/class-archiver-admin.php:1398
@@ -709,29 +577,158 @@ msgstr ""
 msgid "URL added to archive queue: %s"
 msgstr ""
 
-#: includes/class-archiver-admin.php:932
-msgid "URLs"
+#: includes/class-archiver-admin.php:1418
+msgid "All cache cleared successfully."
 msgstr ""
 
-#: includes/class-archiver-admin.php:390
-msgid "URLs pending"
+#: includes/class-archiver-admin.php:1420
+msgid "Error clearing cache: "
 msgstr ""
 
-#: includes/class-archiver-admin.php:813
-msgid "Value"
+#: includes/class-archiver-admin.php:1435
+msgid "Service is operational"
 msgstr ""
 
-#: includes/class-archiver-admin.php:94
+#: includes/class-archiver-admin.php:1449
+msgid "Invalid service"
+msgstr ""
+
+#: includes/class-archiver-admin.php:1458
 #, php-format
-msgid "Version: %s"
+msgid "%s is working correctly"
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:33
+msgid "Archive Status"
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:87
+msgid "Pending"
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:91
+msgid "Failed"
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:97
+msgid "Last Run:"
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:101
+msgid "Next Run:"
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:110
+#: includes/class-archiver-dashboard.php:327 includes/class-archiver.php:301
+msgid "Archive Now"
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:115
+#: includes/class-archiver-dashboard.php:358
+msgid "Process Queue"
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:118
+msgid "Refresh Stats"
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:127
+msgid "Recent Queue Items"
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:142
+#, php-format
+msgid "... and %d more"
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:300
+#: includes/class-archiver-dashboard.php:481
+msgid "Please enter a valid URL"
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:304
+#: includes/class-archiver-dashboard.php:336
+msgid "Processing..."
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:320
+msgid "Archive failed"
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:324
+#: includes/class-archiver-dashboard.php:355
+msgid "Request failed"
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:351
+msgid "Process failed"
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:461
+#: includes/class-archiver-dashboard.php:502
+msgid "Permission denied"
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:469
+#, php-format
+msgid "Started processing %d URLs from queue"
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:472
+msgid "Queue processing not available"
+msgstr ""
+
+#: includes/class-archiver-dashboard.php:491
+msgid "Archive functionality not available"
+msgstr ""
+
+#: includes/class-archiver.php:197
+msgid "Exactly Every Hour"
+msgstr ""
+
+#: includes/class-archiver.php:212 includes/class-archiver.php:241
+#: includes/class-archiver.php:257
+msgid "Archives"
+msgstr ""
+
+#: includes/class-archiver.php:260
+msgid "Archive Snapshots"
+msgstr ""
+
+#: includes/class-archiver.php:295 includes/class-archiver.php:606
+msgid "Loading snapshots..."
+msgstr ""
+
+#: includes/class-archiver.php:316
+msgid "Invalid URL"
+msgstr ""
+
+#: includes/class-archiver.php:335
+msgid "No archives yet. A snapshot request has been scheduled."
+msgstr ""
+
+#: includes/class-archiver.php:336
+msgid "There are no archives of this URL."
+msgstr ""
+
+#: includes/class-archiver.php:355
+msgid "Invalid URL."
+msgstr ""
+
+#: includes/class-archiver.php:384
+msgid "Snapshot request submitted and will be processed shortly."
 msgstr ""
 
 #: includes/class-archiver.php:458 includes/class-archiver.php:611
 msgid "View all snapshots"
 msgstr ""
 
-#: includes/class-archiver-admin.php:197
-msgid "View and manage the archive queue."
+#: includes/class-archiver.php:487
+msgid "Loading..."
+msgstr ""
+
+#: includes/class-archiver.php:495
+msgid "Trigger Snapshot"
 msgstr ""
 
 #: includes/class-archiver.php:508
@@ -739,20 +736,40 @@ msgstr ""
 msgid "View on %s"
 msgstr ""
 
-#: includes/class-archiver-admin.php:397
-msgid "Warning:"
+#: includes/class-archiver.php:607
+msgid "Triggering snapshot..."
 msgstr ""
 
-#: includes/class-archiver-admin.php:326
-msgid "Weekly"
+#: includes/class-archiver.php:608
+msgid "Snapshot triggered successfully!"
 msgstr ""
 
-#. Author of the plugin
-msgid "WenPai.org"
+#: includes/class-archiver.php:609
+msgid "Failed to trigger snapshot."
 msgstr ""
 
-#. Name of the plugin
-msgid "WP Archiver"
+#: includes/class-archiver.php:610
+msgid "No archives yet."
+msgstr ""
+
+#: includes/class-archiver.php:614
+msgid "Offline"
+msgstr ""
+
+#: includes/class-archiver.php:615
+msgid "Connection successful"
+msgstr ""
+
+#: includes/class-archiver.php:616
+msgid "Connection failed"
+msgstr ""
+
+#: includes/class-archiver.php:709
+msgid "Snapshot request recorded."
+msgstr ""
+
+#: wp-archiver.php:245
+msgid "Settings"
 msgstr ""
 
 #: wp-archiver.php:256
@@ -761,8 +778,4 @@ msgstr ""
 
 #: wp-archiver.php:264
 msgid "WP Archiver requires WordPress 4.9 or higher."
-msgstr ""
-
-#: includes/class-archiver-admin.php:75
-msgid "You do not have sufficient permissions to access this page."
 msgstr ""
